@@ -5,13 +5,33 @@ import type { Scope } from "@/lib/db/tenant-db";
 import type { IssuePriority } from "@/lib/types";
 import { computeHoursPerYear, isFrequencyUnit, type FrequencyUnit } from "@/lib/workload";
 
+/** An org unit plus every unit nested under it — e.g. picking a Division includes every Department and Section inside it. */
+async function expandOrgUnitIds(companyId: string, orgUnitId: string): Promise<Set<string>> {
+  const all = await db.select().from(orgUnits).where(eq(orgUnits.companyId, companyId));
+  const ids = new Set([orgUnitId]);
+  let frontier = [orgUnitId];
+  while (frontier.length > 0) {
+    const children = all.filter((u) => u.parentId && frontier.includes(u.parentId)).map((u) => u.id);
+    children.forEach((id) => ids.add(id));
+    frontier = children;
+  }
+  return ids;
+}
+
 /**
  * `companyId: null` means "every company" — only reachable for a
  * company-independent scope (consultant/superadmin, see
  * isCompanyIndependentRole). A company user must always pass their own
- * companyId; this throws otherwise, same as before.
+ * companyId; this throws otherwise, same as before. `orgUnitId`, if given,
+ * restricts to that org unit and everything nested under it — only
+ * meaningful alongside a specific `companyId`. `search` matches
+ * (case-insensitive, substring) the title or the submitter's name.
  */
-export async function listIssues(scope: Scope, companyId: string | null) {
+export async function listIssues(
+  scope: Scope,
+  companyId: string | null,
+  opts: { orgUnitId?: string | null; search?: string } = {}
+) {
   if (scope.companyId !== null && scope.companyId !== companyId) {
     throw new Error("Forbidden: not your company");
   }
@@ -22,6 +42,7 @@ export async function listIssues(scope: Scope, companyId: string | null) {
       priority: issues.priority,
       status: issues.status,
       createdAt: issues.createdAt,
+      orgUnitId: issues.orgUnitId,
       orgUnitName: orgUnits.name,
       createdByName: users.name,
       companyName: companies.name,
@@ -42,10 +63,21 @@ export async function listIssues(scope: Scope, companyId: string | null) {
     hoursPerYearByIssueId.set(impact.issueId, (hoursPerYearByIssueId.get(impact.issueId) ?? 0) + hours);
   }
 
-  return rows.map((r) => ({
+  let result = rows.map((r) => ({
     ...r,
     totalHoursPerYear: Math.round((hoursPerYearByIssueId.get(r.id) ?? 0) * 10) / 10,
   }));
+
+  if (opts.orgUnitId && companyId) {
+    const allowed = await expandOrgUnitIds(companyId, opts.orgUnitId);
+    result = result.filter((r) => allowed.has(r.orgUnitId));
+  }
+  if (opts.search?.trim()) {
+    const needle = opts.search.trim().toLowerCase();
+    result = result.filter((r) => r.title.toLowerCase().includes(needle) || r.createdByName.toLowerCase().includes(needle));
+  }
+
+  return result;
 }
 
 export async function getIssue(scope: Scope, issueId: string) {

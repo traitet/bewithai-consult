@@ -25,10 +25,10 @@ const NAV_ITEMS = [
   { href: "/projects", label: "โปรเจกต์", Icon: ProjectsIcon },
   { href: "/approvals", label: "การอนุมัติ", Icon: ApprovalsIcon },
   { href: "/bookings", label: "นัดหมาย", Icon: BookingsIcon },
-  { href: "/elearning", label: "E-Learning", Icon: ELearningIcon },
-  { href: "/skills", label: "ทักษะ (Skills)", Icon: SkillsIcon },
+  { href: "/elearning", label: "เรียนออนไลน์", Icon: ELearningIcon },
+  { href: "/skills", label: "ทักษะ", Icon: SkillsIcon },
   { href: "/performance", label: "ผลงานพนักงาน", Icon: TeamIcon },
-  { href: "/leaderboard", label: "อันดับ (Leaderboard)", Icon: LeaderboardIcon },
+  { href: "/leaderboard", label: "อันดับ", Icon: LeaderboardIcon },
   { href: "/success-stories", label: "เรื่องราวความสำเร็จ", Icon: SuccessStoryIcon },
   { href: "/reports", label: "รายงาน", Icon: ReportsIcon },
 ] as const;

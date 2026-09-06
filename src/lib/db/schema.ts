@@ -107,6 +107,26 @@ export const issues = sqliteTable(
   (t) => [index("issues_company_idx").on(t.companyId)]
 );
 
+/**
+ * One row per person affected by an issue's manual process, capturing how
+ * often and how long each occurrence costs them. Hours/year is derived from
+ * these (see src/lib/workload.ts), never stored, so the 250-day/8-hr-day
+ * convention can change in one place without a backfill.
+ */
+export const issueImpacts = sqliteTable(
+  "issue_impacts",
+  {
+    id: id(),
+    issueId: text("issue_id").notNull().references(() => issues.id),
+    userId: text("user_id").notNull().references(() => users.id),
+    frequencyUnit: text("frequency_unit").notNull(), // PER_DAY | PER_WEEK | PER_MONTH | PER_YEAR
+    frequencyCount: real("frequency_count").notNull(),
+    minutesPerOccurrence: real("minutes_per_occurrence").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("issue_impacts_issue_idx").on(t.issueId)]
+);
+
 export const issueAttachments = sqliteTable("issue_attachments", {
   id: id(),
   issueId: text("issue_id").notNull().references(() => issues.id),

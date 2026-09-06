@@ -15,12 +15,12 @@ export function userInitials(name: string): string {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-/** Managers eligible for a given org unit's approval role, scoped to the same company. */
-export async function listCompanyUsers(scope: Scope) {
-  if (scope.companyId === null) {
-    throw new Error("Forbidden: pass an explicit company for a consultant-scoped listing");
+/** Every user belonging to one company, e.g. to pick who is affected by an issue's workload. */
+export async function listCompanyUsers(scope: Scope, companyId: string) {
+  if (scope.companyId !== null && scope.companyId !== companyId) {
+    throw new Error("Forbidden: not your company");
   }
-  return db.select().from(users).where(eq(users.companyId, scope.companyId));
+  return db.select().from(users).where(eq(users.companyId, companyId)).orderBy(users.name);
 }
 
 export async function getOwnProfile(scope: Scope) {

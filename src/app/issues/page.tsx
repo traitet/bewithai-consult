@@ -32,6 +32,8 @@ export default async function IssuesPage() {
                 {showingAllCompanies && <th className="px-5 py-3 font-semibold">Company</th>}
                 <th className="px-5 py-3 font-semibold">Department</th>
                 <th className="px-5 py-3 font-semibold">Submitted by</th>
+                <th className="px-5 py-3 font-semibold">วันที่แจ้ง</th>
+                <th className="px-5 py-3 font-semibold">ภาระงาน (ชม./ปี)</th>
                 <th className="px-5 py-3 font-semibold">Priority</th>
                 <th className="px-5 py-3 font-semibold">Status</th>
                 <th className="px-5 py-3 font-semibold"></th>
@@ -40,10 +42,18 @@ export default async function IssuesPage() {
             <tbody>
               {issueRows.map((row) => (
                 <tr key={row.id} className="border-b border-border-soft last:border-0">
-                  <td className="px-5 py-3.5 text-text">{row.title}</td>
+                  <td className="px-5 py-3.5">
+                    <Link href={`/issues/${row.id}`} className="font-medium text-text hover:text-blue">
+                      {row.title}
+                    </Link>
+                  </td>
                   {showingAllCompanies && <td className="px-5 py-3.5 text-text-dim">{row.companyName}</td>}
                   <td className="px-5 py-3.5 text-text-dim">{row.orgUnitName}</td>
                   <td className="px-5 py-3.5 text-text-dim">{row.createdByName}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{new Date(row.createdAt).toLocaleDateString("th-TH")}</td>
+                  <td className="px-5 py-3.5 text-text-dim">
+                    {row.totalHoursPerYear > 0 ? row.totalHoursPerYear.toLocaleString() : "—"}
+                  </td>
                   <td className="px-5 py-3.5">
                     <Badge value={row.priority} />
                   </td>
@@ -61,7 +71,7 @@ export default async function IssuesPage() {
               ))}
               {issueRows.length === 0 && (
                 <tr>
-                  <td colSpan={showingAllCompanies ? 7 : 6} className="px-5 py-8 text-center text-text-faint">
+                  <td colSpan={showingAllCompanies ? 9 : 8} className="px-5 py-8 text-center text-text-faint">
                     No issues yet.
                   </td>
                 </tr>

@@ -11,6 +11,7 @@ import {
   skillLevelDefs,
   courses,
   issues,
+  issueImpacts,
   projects,
   approvalWorkflows,
   approvalSteps,
@@ -89,7 +90,7 @@ async function main() {
     DELETE FROM bookings; DELETE FROM benefit_summaries; DELETE FROM approval_steps;
     DELETE FROM approval_workflows; DELETE FROM case_study_comments; DELETE FROM case_study_ratings;
     DELETE FROM case_studies; DELETE FROM projects; DELETE FROM issue_attachments;
-    DELETE FROM issues; DELETE FROM users; DELETE FROM org_units; DELETE FROM courses;
+    DELETE FROM issue_impacts; DELETE FROM issues; DELETE FROM users; DELETE FROM org_units; DELETE FROM courses;
     DELETE FROM skill_level_defs; DELETE FROM ai_tools; DELETE FROM companies;
   `);
 
@@ -310,12 +311,22 @@ async function main() {
     { section: "People Ops", title: "Policy questions go to HR instead of self-serve", priority: "LOW", desc: "Employees email HR for answers already covered in the handbook." },
   ] as const;
 
+  // Default workload-impact assumptions per priority, for seeding realistic
+  // "hours/year lost" figures (see src/lib/workload.ts for the 250-day math).
+  const IMPACT_DEFAULTS_BY_PRIORITY: Record<string, { frequencyCount: number; minutesPerOccurrence: number }> = {
+    HIGH: { frequencyCount: 4, minutesPerOccurrence: 30 },
+    MEDIUM: { frequencyCount: 3, minutesPerOccurrence: 20 },
+    LOW: { frequencyCount: 2, minutesPerOccurrence: 15 },
+  };
+
   type IssueRow = typeof issues.$inferSelect;
   const createdIssues: (IssueRow & { sectionName: string })[] = [];
+  let issueIndex = 0;
   for (const plan of ISSUE_PLAN) {
     const section = findSection(plan.section);
+    const sectionMembers = (await db.select().from(users).where(eq(users.orgUnitId, section.id))).filter((u) => u.role === "MEMBER");
     // Prefer a member actually in this section for realism; fall back to Kanya.
-    const memberInSection = (await db.select().from(users).where(eq(users.orgUnitId, section.id))).find((u) => u.role === "MEMBER") ?? kanya;
+    const memberInSection = sectionMembers[0] ?? kanya;
     const [row] = await db
       .insert(issues)
       .values({
@@ -329,6 +340,28 @@ async function main() {
       })
       .returning();
     createdIssues.push({ ...row, sectionName: plan.section });
+
+    // Log who loses time to this issue and how often, so the workload calculator has real demo data.
+    const impactDefaults = IMPACT_DEFAULTS_BY_PRIORITY[plan.priority] ?? IMPACT_DEFAULTS_BY_PRIORITY.MEDIUM;
+    await db.insert(issueImpacts).values({
+      issueId: row.id,
+      userId: memberInSection.id,
+      frequencyUnit: "PER_WEEK",
+      frequencyCount: impactDefaults.frequencyCount,
+      minutesPerOccurrence: impactDefaults.minutesPerOccurrence,
+    });
+    // Every third issue also affects a second teammate, to demo multi-person totals.
+    const secondMember = sectionMembers.find((u) => u.id !== memberInSection.id);
+    if (issueIndex % 3 === 0 && secondMember) {
+      await db.insert(issueImpacts).values({
+        issueId: row.id,
+        userId: secondMember.id,
+        frequencyUnit: "PER_WEEK",
+        frequencyCount: Math.max(1, impactDefaults.frequencyCount - 1),
+        minutesPerOccurrence: impactDefaults.minutesPerOccurrence,
+      });
+    }
+    issueIndex += 1;
   }
 
   console.log("Seeding projects with varied approval states...");

@@ -82,7 +82,7 @@ export function Sidebar({
         {showTeamLink && (
           <Link href="/team" className={itemClass(pathname.startsWith("/team"))}>
             <TeamIcon className={iconClass(pathname.startsWith("/team"))} />
-            <span>ทีมของฉัน</span>
+            <span>ทีมของฉัน (ตั้งเป้าหมาย)</span>
           </Link>
         )}
 

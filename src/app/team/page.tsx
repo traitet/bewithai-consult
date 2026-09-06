@@ -16,18 +16,18 @@ export default async function TeamPage() {
   const members = await listTeamForDivisionManager(scope, session.userId);
 
   return (
-    <AppShell title="My Team">
+    <AppShell title="ทีมของฉัน">
       <p className="mb-4 text-[12.5px] text-text-faint">
-        Set each person&rsquo;s annual benefit-hours target — the AI-adoption time savings they&rsquo;re expected to
-        reach this year. Default is {DEFAULT_ANNUAL_TARGET_HOURS} hrs/year (15% of a 2,000 hour work year).
+        ตั้งเป้าหมายลดเวลาทำงาน (benefit hours) ต่อปีของแต่ละคนในทีม — เวลาที่คาดว่าจะประหยัดได้จากการใช้ AI ในปีนี้
+        ค่าเริ่มต้นคือ {DEFAULT_ANNUAL_TARGET_HOURS} ชม./ปี (15% ของเวลาทำงาน 2,000 ชม./ปี)
       </p>
       <div className="overflow-hidden rounded-2xl border border-border bg-surface">
         <table className="w-full text-left text-[12.5px]">
           <thead>
             <tr className="border-b border-border text-[11px] uppercase tracking-wide text-text-faint">
-              <th className="px-5 py-3 font-semibold">Name</th>
-              <th className="px-5 py-3 font-semibold">Role</th>
-              <th className="px-5 py-3 font-semibold">Annual Target</th>
+              <th className="px-5 py-3 font-semibold">ชื่อ</th>
+              <th className="px-5 py-3 font-semibold">ตำแหน่ง</th>
+              <th className="px-5 py-3 font-semibold">เป้าหมายรายปี</th>
             </tr>
           </thead>
           <tbody>
@@ -46,9 +46,9 @@ export default async function TeamPage() {
                       defaultValue={m.annualTargetHours}
                       className="input w-24"
                     />
-                    <span className="text-[11px] text-text-faint">hrs/yr</span>
+                    <span className="text-[11px] text-text-faint">ชม./ปี</span>
                     <button type="submit" className="rounded-md border border-border px-2.5 py-1.5 text-[11.5px] font-semibold text-text-dim hover:border-blue hover:text-blue">
-                      Save
+                      บันทึก
                     </button>
                   </form>
                 </td>
@@ -57,7 +57,7 @@ export default async function TeamPage() {
             {members.length === 0 && (
               <tr>
                 <td colSpan={3} className="px-5 py-8 text-center text-text-faint">
-                  No one reports up through your division yet.
+                  ยังไม่มีพนักงานในสายงานที่คุณดูแล
                 </td>
               </tr>
             )}

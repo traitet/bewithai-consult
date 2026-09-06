@@ -10,10 +10,10 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 :root{
-  --bg:#0a0f1a; --sidebar:#0b1220; --surface:#121a2b; --surface-alt:#182238;
-  --border:#1e2a42; --border-soft:#182238;
-  --text:#eef2f8; --text-dim:#93a1bd; --text-faint:#5c6b8a;
-  --blue:#4f8dff; --teal:#2dd4c4; --amber:#f0b054; --green:#34d399; --red:#f2665a;
+  --bg:#f0f2f5; --sidebar:#ffffff; --surface:#ffffff; --surface-alt:#e9ebee;
+  --border:#dddfe2; --border-soft:#e4e6eb;
+  --text:#050505; --text-dim:#65676b; --text-faint:#8a8d91;
+  --blue:#1877f2; --teal:#42a5f5; --amber:#c2760c; --green:#31a24c; --red:#e41e3f;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;}
@@ -30,7 +30,7 @@ a:hover{color:var(--blue);}
   <div style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;">
     <div style="padding:24px 20px 20px 20px;display:flex;align-items:center;gap:10px;">
       <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-        <defs><linearGradient id="lg7" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#2dd4c4"/></linearGradient></defs>
+        <defs><linearGradient id="lg7" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#1877f2"/><stop offset="1" stop-color="#42a5f5"/></linearGradient></defs>
         <path d="M7 19 13 6 19 19" stroke="url(#lg7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="13" cy="6" r="2.4" fill="url(#lg7)"/><circle cx="7" cy="19" r="2.4" fill="url(#lg7)"/><circle cx="19" cy="19" r="2.4" fill="url(#lg7)"/>
       </svg>
@@ -57,8 +57,8 @@ a:hover{color:var(--blue);}
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
         <span>Bookings</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));color:var(--text);font-size:13.5px;font-weight:600;">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5 10 4l7.5 3.5L10 11z"/><path d="M5.5 9v3.5c0 1 2 2 4.5 2s4.5-1 4.5-2V9"/></svg>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(24,119,242,.16), rgba(66,165,245,.10));color:var(--text);font-size:13.5px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#42a5f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5 10 4l7.5 3.5L10 11z"/><path d="M5.5 9v3.5c0 1 2 2 4.5 2s4.5-1 4.5-2V9"/></svg>
         <span>E-Learning</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
@@ -93,7 +93,7 @@ a:hover{color:var(--blue);}
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;opacity:.75;" title="Scoped to your company">
           <span style="font-size:12.5px;color:var(--text-dim);font-weight:600;">Acme Manufacturing</span>
-          <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7.5 9V7a2.5 2.5 0 0 1 5 0v2"/></svg>
+          <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#8a8d91" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7.5 9V7a2.5 2.5 0 0 1 5 0v2"/></svg>
         </div>
         <div style="width:32px;height:32px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--text-dim);">KP</div>
       </div>
@@ -115,7 +115,7 @@ a:hover{color:var(--blue);}
           <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Avg. Score</span>
           <span style="font-family:'Space Grotesk';font-size:24px;font-weight:600;color:var(--text);">88%</span>
         </div>
-        <div style="background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));border:1px solid rgba(45,212,196,.35);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+        <div style="background:linear-gradient(135deg, rgba(24,119,242,.16), rgba(66,165,245,.10));border:1px solid rgba(66,165,245,.35);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
           <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Skill Level-ups (Q3)</span>
           <span style="font-family:'Space Grotesk';font-size:24px;font-weight:600;color:var(--text);">34</span>
         </div>
@@ -135,7 +135,7 @@ a:hover{color:var(--blue);}
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
 
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(79,141,255,.14);padding:3px 8px;border-radius:6px;">Claude Code</span><span style="font-size:10.5px;color:var(--text-faint);">Target L2</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(24,119,242,.14);padding:3px 8px;border-radius:6px;">Claude Code</span><span style="font-size:10.5px;color:var(--text-faint);">Target L2</span></div>
               <span style="font-size:13px;font-weight:600;color:var(--text);">Claude Code Fundamentals</span>
               <span style="font-size:11px;color:var(--text-faint);">2.5 hrs · 6 lessons</span>
               <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--green);"></div></div>
@@ -143,11 +143,11 @@ a:hover{color:var(--blue);}
             </div>
 
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(45,212,196,.14);padding:3px 8px;border-radius:6px;">Claude Cowork</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(66,165,245,.14);padding:3px 8px;border-radius:6px;">Claude Cowork</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
               <span style="font-size:13px;font-weight:600;color:var(--text);">Advanced Prompt Design</span>
               <span style="font-size:11px;color:var(--text-faint);">3.0 hrs · 8 lessons</span>
               <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:60%;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));"></div></div>
-              <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:#061018;">Continue</button>
+              <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:#ffffff;">Continue</button>
             </div>
 
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
@@ -159,15 +159,15 @@ a:hover{color:var(--blue);}
             </div>
 
             <div style="background:var(--surface);border:1px solid var(--teal);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(79,141,255,.14);padding:3px 8px;border-radius:6px;">Claude Code</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(24,119,242,.14);padding:3px 8px;border-radius:6px;">Claude Code</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
               <span style="font-size:13px;font-weight:600;color:var(--text);">Automating Workflows with Claude Code</span>
               <span style="font-size:11px;color:var(--text-faint);">4.0 hrs · 10 lessons</span>
               <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:30%;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));"></div></div>
-              <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:#061018;">Continue</button>
+              <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:#ffffff;">Continue</button>
             </div>
 
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(45,212,196,.14);padding:3px 8px;border-radius:6px;">Claude Cowork</span><span style="font-size:10.5px;color:var(--text-faint);">Target L1</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(66,165,245,.14);padding:3px 8px;border-radius:6px;">Claude Cowork</span><span style="font-size:10.5px;color:var(--text-faint);">Target L1</span></div>
               <span style="font-size:13px;font-weight:600;color:var(--text);">Claude Cowork for Team Collaboration</span>
               <span style="font-size:11px;color:var(--text-faint);">1.5 hrs · 4 lessons</span>
               <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--teal);"></div></div>
@@ -190,12 +190,12 @@ a:hover{color:var(--blue);}
           <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px;">
             <span style="font-size:13px;font-weight:600;color:var(--text);">My Learning Path</span>
             <div style="display:flex;align-items:center;gap:10px;">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:34px;height:34px;border-radius:50%;background:var(--teal);color:#061018;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">L2</div><span style="font-size:10px;color:var(--text-faint);">Current</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:34px;height:34px;border-radius:50%;background:var(--teal);color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">L2</div><span style="font-size:10px;color:var(--text-faint);">Current</span></div>
               <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--teal),var(--border));"></div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:34px;height:34px;border-radius:50%;background:var(--surface-alt);border:1px solid var(--border);color:var(--text-faint);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">L3</div><span style="font-size:10px;color:var(--text-faint);">Next</span></div>
             </div>
             <span style="font-size:11.5px;color:var(--text-dim);">Claude Code proficiency</span>
-            <div style="background:rgba(45,212,196,.10);border:1px solid rgba(45,212,196,.3);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;">
+            <div style="background:rgba(66,165,245,.10);border:1px solid rgba(66,165,245,.3);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;">
               <span style="font-size:11.5px;color:var(--text-dim);line-height:1.5;">Completing <b style="color:var(--text);">Automating Workflows with Claude Code</b> raises your Claude Code level <b style="color:var(--teal);">L2 → L3</b>.</span>
               <a href="#" style="font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">View in Skill Matrix <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l6 5-6 5"/></svg></a>
             </div>

@@ -10,10 +10,10 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 :root{
-  --bg:#0a0f1a; --sidebar:#0b1220; --surface:#121a2b; --surface-alt:#182238;
-  --border:#1e2a42; --border-soft:#182238;
-  --text:#eef2f8; --text-dim:#93a1bd; --text-faint:#5c6b8a;
-  --blue:#4f8dff; --teal:#2dd4c4; --amber:#f0b054; --green:#34d399; --red:#f2665a;
+  --bg:#f0f2f5; --sidebar:#ffffff; --surface:#ffffff; --surface-alt:#e9ebee;
+  --border:#dddfe2; --border-soft:#e4e6eb;
+  --text:#050505; --text-dim:#65676b; --text-faint:#8a8d91;
+  --blue:#1877f2; --teal:#42a5f5; --amber:#c2760c; --green:#31a24c; --red:#e41e3f;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;}
@@ -31,7 +31,7 @@ a:hover{color:var(--blue);}
   <div style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;">
     <div style="padding:24px 20px 20px 20px;display:flex;align-items:center;gap:10px;">
       <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-        <defs><linearGradient id="lg5" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#2dd4c4"/></linearGradient></defs>
+        <defs><linearGradient id="lg5" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#1877f2"/><stop offset="1" stop-color="#42a5f5"/></linearGradient></defs>
         <path d="M7 19 13 6 19 19" stroke="url(#lg5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="13" cy="6" r="2.4" fill="url(#lg5)"/><circle cx="7" cy="19" r="2.4" fill="url(#lg5)"/><circle cx="19" cy="19" r="2.4" fill="url(#lg5)"/>
       </svg>
@@ -54,8 +54,8 @@ a:hover{color:var(--blue);}
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V3"/><path d="M4 3.5c1.4-.9 2.8-.9 4.2 0 1.4.9 2.8.9 4.2 0 1.4-.9 2.8-.9 4.2 0v7c-1.4-.9-2.8-.9-4.2 0-1.4.9-2.8.9-4.2 0-1.4-.9-2.8-.9-4.2 0"/></svg>
         <span>Issues</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));color:var(--text);font-size:13.5px;font-weight:600;">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(24,119,242,.16), rgba(66,165,245,.10));color:var(--text);font-size:13.5px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#42a5f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
         <span>Bookings</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
@@ -78,7 +78,7 @@ a:hover{color:var(--blue);}
     </div>
 
     <div style="padding:16px;border-top:1px solid var(--border-soft);display:flex;align-items:center;gap:10px;">
-      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#ffffff;">TR</div>
       <div style="display:flex;flex-direction:column;">
         <span style="font-size:12.5px;color:var(--text);font-weight:600;">Traitet</span>
         <span style="font-size:11px;color:var(--text-faint);">Lead AI Consultant</span>
@@ -93,11 +93,11 @@ a:hover{color:var(--blue);}
       <span style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;color:var(--text);">Book a Consultation</span>
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;">
-          <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="1.5"/><path d="M7 7h1M7 10.5h1M7 14h1M12 7h1M12 10.5h1M12 14h1"/></svg>
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#42a5f5" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="1.5"/><path d="M7 7h1M7 10.5h1M7 14h1M12 7h1M12 10.5h1M12 14h1"/></svg>
           <span style="font-size:12.5px;color:var(--text);font-weight:600;">All Companies</span>
-          <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="2.2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="#8a8d91" stroke-width="2.2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
         </div>
-        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#ffffff;">TR</div>
       </div>
     </div>
 
@@ -109,7 +109,7 @@ a:hover{color:var(--blue);}
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--teal);border-radius:999px;padding:6px 14px 6px 8px;">
-              <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#061018;">TR</div>
+              <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#ffffff;">TR</div>
               <span style="font-size:12.5px;font-weight:600;color:var(--text);">Traitet</span>
               <div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div>
             </div>
@@ -129,14 +129,14 @@ a:hover{color:var(--blue);}
 
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div style="display:flex;align-items:center;gap:10px;">
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#93a1bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l-5 5 5 5"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#65676b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l-5 5 5 5"/></svg>
             <span style="font-family:'Space Grotesk';font-size:14.5px;font-weight:600;color:var(--text);">Week of Sep 7 – 13, 2026</span>
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#93a1bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l5 5-5 5"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#65676b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l5 5-5 5"/></svg>
           </div>
           <div style="display:flex;align-items:center;gap:14px;">
-            <div style="display:flex;align-items:center;gap:6px;"><div style="width:9px;height:9px;border-radius:2px;background:rgba(45,212,196,.18);border:1px solid var(--teal);"></div><span style="font-size:11px;color:var(--text-faint);">Available</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:9px;height:9px;border-radius:2px;background:rgba(66,165,245,.18);border:1px solid var(--teal);"></div><span style="font-size:11px;color:var(--text-faint);">Available</span></div>
             <div style="display:flex;align-items:center;gap:6px;"><div style="width:9px;height:9px;border-radius:2px;background:var(--blue);"></div><span style="font-size:11px;color:var(--text-faint);">Booked</span></div>
-            <div style="display:flex;align-items:center;gap:6px;"><div style="width:9px;height:9px;border-radius:2px;background:repeating-linear-gradient(45deg,#1e2a42,#1e2a42 3px,#243352 3px,#243352 6px);"></div><span style="font-size:11px;color:var(--text-faint);">Unavailable</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:9px;height:9px;border-radius:2px;background:repeating-linear-gradient(45deg,#c7d0e0,#c7d0e0 3px,#e4e6eb 3px,#e4e6eb 6px);"></div><span style="font-size:11px;color:var(--text-faint);">Unavailable</span></div>
           </div>
         </div>
 
@@ -153,73 +153,73 @@ a:hover{color:var(--blue);}
 
             <!-- 08:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">08:00</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
 
             <!-- 10:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">10:00</div>
-            <div class="slot" style="background:var(--blue);color:#eef2f8;font-weight:600;">Kanya P.<br/><span style="font-weight:400;opacity:.85;">PRJ-018</span></div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:var(--blue);color:#eef2f8;font-weight:600;box-shadow:0 0 0 2px var(--teal);">Kanya P.<br/><span style="font-weight:400;opacity:.85;">Checkpoint</span></div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:var(--blue);color:#ffffff;font-weight:600;">Kanya P.<br/><span style="font-weight:400;opacity:.85;">PRJ-018</span></div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:var(--blue);color:#ffffff;font-weight:600;box-shadow:0 0 0 2px var(--teal);">Kanya P.<br/><span style="font-weight:400;opacity:.85;">Checkpoint</span></div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
 
             <!-- 12:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">12:00</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:repeating-linear-gradient(45deg,#161f30,#161f30 4px,#1c2740 4px,#1c2740 8px);border:1px solid var(--border);color:var(--text-faint);">Unavailable<br/><span style="opacity:.8;">Training</span></div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:repeating-linear-gradient(45deg,#e4e6eb,#e4e6eb 4px,#eceef1 4px,#eceef1 8px);border:1px solid var(--border);color:var(--text-faint);">Unavailable<br/><span style="opacity:.8;">Training</span></div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
 
             <!-- 14:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">14:00</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:var(--blue);color:#eef2f8;font-weight:600;">Anucha S.<br/><span style="font-weight:400;opacity:.85;">PRJ-017</span></div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:var(--blue);color:#ffffff;font-weight:600;">Anucha S.<br/><span style="font-weight:400;opacity:.85;">PRJ-017</span></div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
 
             <!-- 16:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">16:00</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
 
             <!-- 18:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">18:00</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
 
             <!-- 20:00 -->
             <div style="font-size:10.5px;color:var(--text-faint);padding-top:4px;">20:00</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:rgba(45,212,196,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
-            <div class="slot" style="background:repeating-linear-gradient(45deg,#161f30,#161f30 4px,#1c2740 4px,#1c2740 8px);border:1px solid var(--border);color:var(--text-faint);">Unavailable<br/><span style="opacity:.8;">Personal</span></div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:rgba(66,165,245,.10);border:1px solid var(--teal);color:var(--teal);">Available</div>
+            <div class="slot" style="background:repeating-linear-gradient(45deg,#e4e6eb,#e4e6eb 4px,#eceef1 4px,#eceef1 8px);border:1px solid var(--border);color:var(--text-faint);">Unavailable<br/><span style="opacity:.8;">Personal</span></div>
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ a:hover{color:var(--blue);}
         <div style="background:var(--surface);border:1px solid var(--teal);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px;">
           <span style="font-size:13px;font-weight:600;color:var(--text);">Selected Slot</span>
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+            <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#ffffff;">TR</div>
             <div style="display:flex;flex-direction:column;"><span style="font-size:13px;font-weight:600;color:var(--text);">Traitet</span><span style="font-size:11px;color:var(--text-faint);">Lead AI Consultant</span></div>
           </div>
           <div style="display:flex;flex-direction:column;gap:2px;">
@@ -244,7 +244,7 @@ a:hover{color:var(--blue);}
             <span style="font-size:11px;color:var(--text-dim);font-weight:500;">Topic / notes</span>
             <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--text-dim);min-height:56px;">Review reconciliation accuracy on the last two test batches before sign-off.</div>
           </div>
-          <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:8px;padding:11px;font-size:12.5px;font-weight:600;color:#061018;">Confirm Booking</button>
+          <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:8px;padding:11px;font-size:12.5px;font-weight:600;color:#ffffff;">Confirm Booking</button>
         </div>
 
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;">

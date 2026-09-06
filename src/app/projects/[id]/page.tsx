@@ -6,9 +6,17 @@ import { scopeFromSession } from "@/lib/db/tenant-db";
 import { getProjectDetail } from "@/lib/repos/projects";
 import { getCaseStudyByProjectId } from "@/lib/repos/case-studies";
 import { listBenefitImpacts, BENEFIT_PHASES, type BenefitPhase } from "@/lib/repos/benefit";
+import { listWeeklyReports, getWeeklyReportStatus } from "@/lib/repos/weekly-reports";
 import { listCompanyUsers } from "@/lib/repos/users";
 import { Badge } from "@/components/ui/Badge";
-import { approveStepAction, rejectStepAction, updateProgressAction, updatePlanAction, removeBenefitImpactAction } from "./actions";
+import {
+  approveStepAction,
+  rejectStepAction,
+  updateProgressAction,
+  updatePlanAction,
+  removeBenefitImpactAction,
+  submitWeeklyReportAction,
+} from "./actions";
 import { submitCaseStudyAction } from "@/app/success-stories/actions";
 import { AddBenefitImpactForm } from "./AddBenefitImpactForm";
 import { FREQUENCY_LABELS_TH, type FrequencyUnit } from "@/lib/workload";
@@ -28,9 +36,11 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
   if (!detail) notFound();
   const { project, issue, orgUnit, benefit, steps, delay } = detail;
   const existingCaseStudy = await getCaseStudyByProjectId(scope, project.id);
-  const [benefitImpacts, companyUsers] = await Promise.all([
+  const [benefitImpacts, companyUsers, weeklyReports, weeklyStatus] = await Promise.all([
     listBenefitImpacts(scope, project.id),
     listCompanyUsers(scope, project.companyId),
+    listWeeklyReports(scope, project.id),
+    getWeeklyReportStatus(scope, project.id),
   ]);
 
   return (
@@ -136,6 +146,77 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
               <p className="text-[11.5px] text-text-faint">ยังไม่มีแผนส่งมอบ — จะตั้งอัตโนมัติเมื่อได้รับการอนุมัติครบทุกขั้นตอน</p>
             )}
           </section>
+
+          {weeklyStatus.hasPlan && (
+            <section className="rounded-2xl border border-border bg-surface p-5">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="font-heading text-[14px] font-semibold text-text">รายงานความคืบหน้ารายสัปดาห์</h2>
+                {weeklyStatus.isOverdue ? (
+                  <Badge value="DELAYED" label={`ค้างส่ง ${weeklyStatus.missedWeeks.length} สัปดาห์`} />
+                ) : weeklyStatus.currentWeekSubmitted ? (
+                  <Badge value="ON_TRACK" label="ส่งรายงานสัปดาห์นี้แล้ว" />
+                ) : (
+                  <Badge value="PENDING" label="ยังไม่ได้ส่งสัปดาห์นี้" />
+                )}
+              </div>
+              <p className="mb-3 text-[11.5px] text-text-faint">
+                กำหนดส่งทุกสัปดาห์ภายในวันอาทิตย์ (สัปดาห์นี้สิ้นสุด{" "}
+                {weeklyStatus.currentWeekEnding ? new Date(weeklyStatus.currentWeekEnding).toLocaleDateString("th-TH") : "—"})
+              </p>
+
+              <form action={submitWeeklyReportAction} className="mb-4 flex flex-col gap-2.5 rounded-lg border border-border-soft bg-surface-alt p-3">
+                <input type="hidden" name="projectId" value={project.id} />
+                <div className="flex items-center gap-2">
+                  <label className="text-[11.5px] text-text-faint">ความคืบหน้า ณ สัปดาห์นี้</label>
+                  <input
+                    name="progressPct"
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="5"
+                    defaultValue={project.progressPct}
+                    className="input w-20"
+                  />
+                  <span className="text-[11.5px] text-text-faint">%</span>
+                </div>
+                <textarea
+                  name="summary"
+                  required
+                  rows={2}
+                  placeholder="สรุปความคืบหน้าสัปดาห์นี้ / ปัญหาที่พบ..."
+                  className="input resize-none"
+                />
+                <button type="submit" className="self-start rounded-md border border-border px-3 py-1.5 text-[11px] font-semibold text-text-dim hover:border-blue hover:text-blue">
+                  ส่งรายงานสัปดาห์นี้
+                </button>
+              </form>
+
+              {weeklyReports.length > 0 && (
+                <div className="overflow-hidden rounded-lg border border-border-soft">
+                  <table className="w-full text-left text-[12px]">
+                    <thead>
+                      <tr className="border-b border-border-soft bg-surface-alt text-[10.5px] uppercase tracking-wide text-text-faint">
+                        <th className="px-3 py-2 font-semibold">สัปดาห์สิ้นสุด</th>
+                        <th className="px-3 py-2 font-semibold">ความคืบหน้า</th>
+                        <th className="px-3 py-2 font-semibold">สรุป</th>
+                        <th className="px-3 py-2 font-semibold">ผู้ส่ง</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {weeklyReports.map((r) => (
+                        <tr key={r.id} className="border-b border-border-soft last:border-0">
+                          <td className="px-3 py-2 text-text-dim">{new Date(r.weekEnding).toLocaleDateString("th-TH")}</td>
+                          <td className="px-3 py-2 font-semibold text-text">{r.progressPct}%</td>
+                          <td className="px-3 py-2 text-text-dim">{r.summary}</td>
+                          <td className="px-3 py-2 text-text-dim">{r.submittedByName}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+          )}
 
           <section className="rounded-2xl border border-border bg-surface p-5">
             <h2 className="mb-3 font-heading text-[14px] font-semibold text-text">Benefit Summary</h2>

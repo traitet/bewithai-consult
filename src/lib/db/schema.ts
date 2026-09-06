@@ -178,6 +178,29 @@ export const benefitImpacts = sqliteTable(
   (t) => [index("benefit_impacts_project_idx").on(t.projectId)]
 );
 
+/**
+ * One row per project per ISO week (Mon-Sun, keyed by that week's Sunday),
+ * recorded by whoever updates delivery status. Used both to log a running
+ * history and to let a manager see which weeks were never filed (see
+ * src/lib/weeklyReport.ts for the due-by-Sunday math).
+ */
+export const weeklyProgressReports = sqliteTable(
+  "weekly_progress_reports",
+  {
+    id: id(),
+    projectId: text("project_id").notNull().references(() => projects.id),
+    weekEnding: integer("week_ending", { mode: "timestamp" }).notNull(), // the Sunday this report covers
+    progressPct: integer("progress_pct").notNull(),
+    summary: text("summary").notNull(),
+    submittedById: text("submitted_by_id").notNull().references(() => users.id),
+    submittedAt: createdAt(),
+  },
+  (t) => [
+    index("weekly_progress_reports_project_idx").on(t.projectId),
+    uniqueIndex("weekly_progress_reports_project_week_idx").on(t.projectId, t.weekEnding),
+  ]
+);
+
 export const approvalWorkflows = sqliteTable(
   "approval_workflows",
   {

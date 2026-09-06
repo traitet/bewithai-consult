@@ -6,6 +6,7 @@ import { scopeFromSession } from "@/lib/db/tenant-db";
 import { approveStep, rejectStep } from "@/lib/repos/approvals";
 import { updateProjectProgress, updateProjectPlan } from "@/lib/repos/projects";
 import { addBenefitImpact, removeBenefitImpact } from "@/lib/repos/benefit";
+import { submitWeeklyReport } from "@/lib/repos/weekly-reports";
 
 export async function updateProgressAction(formData: FormData): Promise<void> {
   const session = await requireSession();
@@ -53,6 +54,19 @@ export async function removeBenefitImpactAction(formData: FormData): Promise<voi
 
   await removeBenefitImpact(scope, projectId, impactId);
   revalidatePath(`/projects/${projectId}`);
+}
+
+export async function submitWeeklyReportAction(formData: FormData): Promise<void> {
+  const session = await requireSession();
+  const scope = scopeFromSession(session);
+
+  const projectId = String(formData.get("projectId") ?? "");
+  const progressPct = Number(formData.get("progressPct") ?? 0);
+  const summary = String(formData.get("summary") ?? "");
+
+  await submitWeeklyReport(scope, projectId, { progressPct, summary });
+  revalidatePath(`/projects/${projectId}`);
+  revalidatePath("/projects");
 }
 
 export async function approveStepAction(formData: FormData): Promise<void> {

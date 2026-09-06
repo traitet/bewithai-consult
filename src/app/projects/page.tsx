@@ -4,6 +4,7 @@ import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { effectiveViewingCompanyId } from "@/lib/company-context";
 import { listProjects } from "@/lib/repos/projects";
+import { getWeeklyReportStatus } from "@/lib/repos/weekly-reports";
 import { Badge } from "@/components/ui/Badge";
 
 export default async function ProjectsPage(props: PageProps<"/projects">) {
@@ -16,7 +17,9 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
   const companyId = await effectiveViewingCompanyId(session);
   const showingAllCompanies = companyId === null;
 
-  const rows = await listProjects(scope, companyId, search);
+  const projectRows = await listProjects(scope, companyId, search);
+  const weeklyStatuses = await Promise.all(projectRows.map((r) => getWeeklyReportStatus(scope, r.id)));
+  const rows = projectRows.map((r, i) => ({ ...r, weeklyStatus: weeklyStatuses[i] }));
 
   return (
     <AppShell title="โปรเจกต์ (Projects)">
@@ -48,6 +51,7 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
               <th className="px-5 py-3 font-semibold">เวลาที่ใช้ปัจจุบัน</th>
               <th className="px-5 py-3 font-semibold">เป้าหมายลดเวลา</th>
               <th className="px-5 py-3 font-semibold">ความคืบหน้า</th>
+              <th className="px-5 py-3 font-semibold">รายงานสัปดาห์</th>
               <th className="px-5 py-3 font-semibold">สถานะ</th>
             </tr>
           </thead>
@@ -82,6 +86,19 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
                   </div>
                 </td>
                 <td className="px-5 py-3.5">
+                  {row.weeklyStatus.hasPlan ? (
+                    row.weeklyStatus.isOverdue ? (
+                      <Badge value="DELAYED" label={`ค้างส่ง ${row.weeklyStatus.missedWeeks.length} สัปดาห์`} />
+                    ) : row.weeklyStatus.currentWeekSubmitted ? (
+                      <Badge value="ON_TRACK" label="ส่งแล้ว" />
+                    ) : (
+                      <Badge value="PENDING" label="รอส่งสัปดาห์นี้" />
+                    )
+                  ) : (
+                    <span className="text-text-faint">—</span>
+                  )}
+                </td>
+                <td className="px-5 py-3.5">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <Badge value={row.status} />
                     {row.delay.hasPlan && (
@@ -96,7 +113,7 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={showingAllCompanies ? 8 : 7} className="px-5 py-8 text-center text-text-faint">
+                <td colSpan={showingAllCompanies ? 9 : 8} className="px-5 py-8 text-center text-text-faint">
                   {search ? "ไม่พบโปรเจกต์ที่ตรงกับคำค้นหา" : "ยังไม่มีโปรเจกต์ — แปลงจากปัญหาที่หน้า Issues"}
                 </td>
               </tr>

@@ -32,10 +32,11 @@ export async function submitCaseStudyAction(formData: FormData): Promise<void> {
   const projectId = String(formData.get("projectId") ?? "");
   const title = String(formData.get("title") ?? "").trim();
   const summary = String(formData.get("summary") ?? "").trim();
+  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
 
   if (!title || !summary) throw new Error("Title and summary are required.");
 
-  const caseStudy = await submitCaseStudy(scope, { projectId, title, summary });
+  const caseStudy = await submitCaseStudy(scope, { projectId, title, summary, imageUrl: imageUrl || null });
   revalidatePath(`/projects/${projectId}`);
   redirect(`/success-stories/${caseStudy.id}`);
 }

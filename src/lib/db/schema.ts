@@ -297,6 +297,7 @@ export const caseStudies = sqliteTable(
     projectId: text("project_id").notNull().unique().references(() => projects.id),
     title: text("title").notNull(),
     summary: text("summary").notNull(),
+    imageUrl: text("image_url"), // optional cover photo; a URL for now, same pattern as users.avatarUrl
     submittedById: text("submitted_by_id").notNull().references(() => users.id),
     submittedAt: createdAt(),
     status: text("status").notNull().default("PENDING_APPROVAL"), // PENDING_APPROVAL | PUBLISHED | REJECTED

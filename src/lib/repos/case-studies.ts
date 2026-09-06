@@ -22,7 +22,7 @@ const PUBLISHABLE_STATUSES = ["APPROVED", "IN_PROGRESS", "COMPLETED"];
  */
 export async function submitCaseStudy(
   scope: Scope,
-  input: { projectId: string; title: string; summary: string }
+  input: { projectId: string; title: string; summary: string; imageUrl?: string | null }
 ) {
   const project = await getProject(scope, input.projectId);
   if (!project) throw new Error("Project not found");
@@ -46,6 +46,7 @@ export async function submitCaseStudy(
       projectId: project.id,
       title: input.title,
       summary: input.summary,
+      imageUrl: input.imageUrl ?? null,
       submittedById: scope.userId,
       status: "PENDING_APPROVAL",
       approverUserId: directManager.managerUserId,
@@ -102,6 +103,7 @@ export async function listCaseStudies(scope: Scope, companyId: string) {
       id: caseStudies.id,
       title: caseStudies.title,
       summary: caseStudies.summary,
+      imageUrl: caseStudies.imageUrl,
       submittedAt: caseStudies.submittedAt,
       projectTitle: projects.title,
       publishedByName: users.name,

@@ -52,8 +52,13 @@ export default async function SuccessStoriesPage() {
           <Link
             key={s.id}
             href={`/success-stories/${s.id}`}
-            className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-5 hover:border-blue"
+            className="flex flex-col gap-2 overflow-hidden rounded-2xl border border-border bg-surface hover:border-blue"
           >
+            {s.imageUrl && (
+              // eslint-disable-next-line @next/next/no-img-element -- user-supplied external URL, not a static asset
+              <img src={s.imageUrl} alt={s.title} className="h-36 w-full object-cover" />
+            )}
+            <div className="flex flex-col gap-2 p-5">
             <span className="font-heading text-[15px] font-semibold text-text">{s.title}</span>
             <span className="text-[11.5px] text-text-faint">from project: {s.projectTitle}</span>
             <p className="line-clamp-2 text-[12.5px] text-text-dim">{s.summary}</p>
@@ -65,6 +70,7 @@ export default async function SuccessStoriesPage() {
               </span>
             </div>
             <span className="text-[11px] text-text-faint">by {s.publishedByName}</span>
+            </div>
           </Link>
         ))}
         {stories.length === 0 && (

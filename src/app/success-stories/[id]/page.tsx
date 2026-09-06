@@ -69,7 +69,12 @@ export default async function SuccessStoryDetailPage(props: PageProps<"/success-
 
       <div className="flex gap-6">
         <div className="flex flex-1 flex-col gap-5">
-          <section className="rounded-2xl border border-border bg-surface p-6">
+          <section className="overflow-hidden rounded-2xl border border-border bg-surface">
+            {caseStudy.imageUrl && (
+              // eslint-disable-next-line @next/next/no-img-element -- user-supplied external URL, not a static asset
+              <img src={caseStudy.imageUrl} alt={caseStudy.title} className="h-56 w-full object-cover" />
+            )}
+            <div className="p-6">
             <p className="mb-4 text-[11.5px] text-text-faint">from project: {project?.title}</p>
             <p className="whitespace-pre-line text-[13px] leading-relaxed text-text">{caseStudy.summary}</p>
 
@@ -84,6 +89,7 @@ export default async function SuccessStoryDetailPage(props: PageProps<"/success-
                 />
               </div>
             )}
+            </div>
           </section>
 
           {isPublished && (

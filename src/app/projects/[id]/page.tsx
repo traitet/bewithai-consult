@@ -90,6 +90,7 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
                 </p>
                 <input name="title" required placeholder="Success story title" className="input" />
                 <textarea name="summary" required rows={3} placeholder="What did you do, and what changed?" className="input resize-none" />
+                <input name="imageUrl" placeholder="Cover photo URL (optional)" className="input" />
                 <button type="submit" className="self-start rounded-lg bg-gradient-to-br from-blue to-teal px-4 py-2 text-[12px] font-semibold text-white">
                   Submit for Approval
                 </button>

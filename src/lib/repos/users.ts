@@ -22,3 +22,17 @@ export async function listCompanyUsers(scope: Scope) {
   }
   return db.select().from(users).where(eq(users.companyId, scope.companyId));
 }
+
+export async function getOwnProfile(scope: Scope) {
+  const [row] = await db.select().from(users).where(eq(users.id, scope.userId));
+  return row ?? null;
+}
+
+/** A user may only ever edit their own record — there is no admin-edits-anyone path here by design. */
+export async function updateOwnProfile(scope: Scope, input: { name: string; avatarUrl?: string | null }) {
+  if (!input.name.trim()) throw new Error("Name cannot be empty");
+  await db
+    .update(users)
+    .set({ name: input.name.trim(), avatarUrl: input.avatarUrl ?? undefined })
+    .where(eq(users.id, scope.userId));
+}

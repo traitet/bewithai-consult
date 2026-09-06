@@ -86,6 +86,11 @@ async function main() {
     .values([{ companyId: acme.id, parentId: finance.id, level: "SECTION", name: "AP/AR" }])
     .returning();
 
+  console.log("Seeding super admin...");
+  await db.insert(users).values([
+    { name: "Traitet (Super Admin)", email: "traitet@gmail.com", passwordHash, role: "SUPERADMIN" },
+  ]);
+
   console.log("Seeding users...");
   // Consultants: companyId = null, orgUnitId = null (see tenant-db.ts)
   const [traitet, saowalak, somchai] = await db

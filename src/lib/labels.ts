@@ -6,4 +6,5 @@ export const ROLE_LABELS: Record<Role, string> = {
   DEPARTMENT_MANAGER: "Department Manager",
   DIVISION_MANAGER: "Division Manager",
   CONSULTANT: "Lead AI Consultant",
+  SUPERADMIN: "Super Admin",
 };

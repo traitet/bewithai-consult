@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { requireSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { isCompanyIndependentRole } from "@/lib/types";
 
 const COOKIE_NAME = "bewithai_viewing_company";
 
@@ -20,8 +21,8 @@ export async function getViewingCompanyId(): Promise<string | null> {
 
 export async function setViewingCompany(formData: FormData): Promise<void> {
   const session = await requireSession();
-  if (session.role !== "CONSULTANT") {
-    throw new Error("Only consultants can switch company view");
+  if (!isCompanyIndependentRole(session.role)) {
+    throw new Error("Only consultants/admins can switch company view");
   }
   const companyId = formData.get("companyId");
   const store = await cookies();

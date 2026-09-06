@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { BuildingIcon } from "@/components/icons";
 import { CompanySwitcher } from "@/components/CompanySwitcher";
+import { Avatar } from "@/components/ui/Avatar";
 
 export function Topbar({
   title,
@@ -7,14 +9,18 @@ export function Topbar({
   companyLabel,
   companies,
   viewingCompanyId,
+  userName,
   userInitials,
+  avatarUrl,
 }: {
   title: string;
   isConsultant: boolean;
   companyLabel: string;
   companies: { id: string; name: string }[];
   viewingCompanyId: string | null;
+  userName: string;
   userInitials: string;
+  avatarUrl?: string | null;
 }) {
   return (
     <div className="flex h-16 flex-shrink-0 items-center justify-between border-b border-border px-7">
@@ -31,9 +37,9 @@ export function Topbar({
             <span className="text-[12.5px] font-semibold text-text-dim">{companyLabel}</span>
           </div>
         )}
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue to-teal text-[12px] font-semibold text-white">
-          {userInitials}
-        </div>
+        <Link href="/profile">
+          <Avatar name={userName} initials={userInitials} avatarUrl={avatarUrl} size={32} />
+        </Link>
       </div>
     </div>
   );

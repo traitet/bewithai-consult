@@ -108,6 +108,25 @@ export function SettingsIcon({ className }: IconProps) {
   );
 }
 
+export function SuccessStoryIcon({ className }: IconProps) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} {...strokeProps}>
+      <path d="M10 2.5 12.4 7.6 18 8.4 14 12.2 15 17.8 10 15.1 5 17.8 6 12.2 2 8.4 7.6 7.6Z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function TeamIcon({ className }: IconProps) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} {...strokeProps}>
+      <circle cx="7.5" cy="6.5" r="2.7" />
+      <path d="M2.8 16c.5-2.6 2.4-4 4.7-4s4.2 1.4 4.7 4" />
+      <circle cx="14.2" cy="7.3" r="2.1" />
+      <path d="M13 12.4c1.9.2 3.3 1.5 3.7 3.6" />
+    </svg>
+  );
+}
+
 export function SearchIcon({ className }: IconProps) {
   return (
     <svg width="15" height="15" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} strokeWidth="1.6">

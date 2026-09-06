@@ -1,12 +1,17 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { getProjectDetail } from "@/lib/repos/projects";
+import { getCaseStudyByProjectId } from "@/lib/repos/case-studies";
 import { Badge } from "@/components/ui/Badge";
 import { approveStepAction, rejectStepAction } from "./actions";
+import { submitCaseStudyAction } from "@/app/success-stories/actions";
 import { ROLE_LABELS } from "@/lib/labels";
 import type { Role } from "@/lib/types";
+
+const PUBLISHABLE_STATUSES = ["APPROVED", "IN_PROGRESS", "COMPLETED"];
 
 export default async function ProjectDetailPage(props: PageProps<"/projects/[id]">) {
   const { id } = await props.params;
@@ -17,6 +22,7 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
   const detail = await getProjectDetail(scope, id);
   if (!detail) notFound();
   const { project, issue, orgUnit, benefit, steps } = detail;
+  const existingCaseStudy = await getCaseStudyByProjectId(scope, project.id);
 
   return (
     <AppShell title={project.title}>
@@ -56,6 +62,44 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
               </div>
             </section>
           )}
+
+          <section className="rounded-2xl border border-border bg-surface p-5">
+            <h2 className="mb-3 font-heading text-[14px] font-semibold text-text">Success Story</h2>
+            {existingCaseStudy ? (
+              <div className="flex items-center gap-3">
+                <Badge
+                  value={existingCaseStudy.status}
+                  label={
+                    existingCaseStudy.status === "PENDING_APPROVAL"
+                      ? "Awaiting manager approval"
+                      : existingCaseStudy.status === "PUBLISHED"
+                        ? "Published"
+                        : "Not approved"
+                  }
+                />
+                <Link href={`/success-stories/${existingCaseStudy.id}`} className="text-[12px] font-semibold text-blue">
+                  View →
+                </Link>
+              </div>
+            ) : PUBLISHABLE_STATUSES.includes(project.status) ? (
+              <form action={submitCaseStudyAction} className="flex flex-col gap-3">
+                <input type="hidden" name="projectId" value={project.id} />
+                <p className="text-[11.5px] text-text-faint">
+                  Share this as inspiration for colleagues. Your manager reviews it before it&rsquo;s visible to
+                  anyone else.
+                </p>
+                <input name="title" required placeholder="Success story title" className="input" />
+                <textarea name="summary" required rows={3} placeholder="What did you do, and what changed?" className="input resize-none" />
+                <button type="submit" className="self-start rounded-lg bg-gradient-to-br from-blue to-teal px-4 py-2 text-[12px] font-semibold text-white">
+                  Submit for Approval
+                </button>
+              </form>
+            ) : (
+              <p className="text-[12px] text-text-faint">
+                Available once this project is approved, in progress, or completed.
+              </p>
+            )}
+          </section>
         </div>
 
         <div className="w-96 flex-shrink-0">

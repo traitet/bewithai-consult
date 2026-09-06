@@ -3,10 +3,11 @@ import { getSession } from "@/lib/auth";
 import { getCompany, listAllCompanies } from "@/lib/repos/companies";
 import { effectiveViewingCompanyId } from "@/lib/company-context";
 import { scopeFromSession } from "@/lib/db/tenant-db";
-import { userInitials } from "@/lib/repos/users";
+import { userInitials, getOwnProfile } from "@/lib/repos/users";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { ROLE_LABELS } from "@/lib/labels";
+import { isCompanyIndependentRole } from "@/lib/types";
 
 /**
  * Wraps every authenticated page: enforces login, renders the shared
@@ -28,7 +29,7 @@ export async function AppShell({
   if (!session) redirect("/login");
 
   const scope = scopeFromSession(session);
-  const isConsultant = session.role === "CONSULTANT";
+  const isConsultant = isCompanyIndependentRole(session.role); // Consultant or Super Admin — both companyId=null
 
   const companies = isConsultant ? await listAllCompanies(scope) : [];
   const viewingCompanyId = await effectiveViewingCompanyId(session);
@@ -41,12 +42,16 @@ export async function AppShell({
     companyLabel = companies.find((c) => c.id === viewingCompanyId)?.name ?? companyLabel;
   }
 
+  const me = await getOwnProfile(scope);
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bg">
       <Sidebar
         userName={session.name}
         userRole={ROLE_LABELS[session.role]}
         userInitials={userInitials(session.name)}
+        avatarUrl={me?.avatarUrl ?? null}
+        showTeamLink={session.role === "DIVISION_MANAGER"}
       />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Topbar
@@ -55,7 +60,9 @@ export async function AppShell({
           companyLabel={companyLabel}
           companies={companies}
           viewingCompanyId={viewingCompanyId}
+          userName={session.name}
           userInitials={userInitials(session.name)}
+          avatarUrl={me?.avatarUrl ?? null}
         />
         <div className="flex-1 overflow-auto p-7">{children}</div>
       </div>

@@ -44,6 +44,12 @@ export const users = sqliteTable(
     role: text("role").notNull(), // see Role union in types.ts
     workStartHour: integer("work_start_hour").default(8), // consultants only
     workEndHour: integer("work_end_hour").default(22), // consultants only
+    // Individual annual benefit-hours target. Default 300 = 15% of a 2,000
+    // hour work year. Only a Division Manager may change a member's target,
+    // and only for members within their own division (see
+    // src/lib/repos/users.ts#setAnnualTargetHours).
+    annualTargetHours: integer("annual_target_hours").notNull().default(300),
+    avatarUrl: text("avatar_url"),
     createdAt: createdAt(),
   },
   (t) => [index("users_company_idx").on(t.companyId)]
@@ -275,6 +281,56 @@ export const notifications = sqliteTable(
   ]
 );
 
+/**
+ * Success case studies: a project owner/consultant submits a completed (or
+ * at least approved) project as a shareable success story. It only becomes
+ * visible to colleagues once the submitter's manager approves it — sharing
+ * is not automatic. Visible company-wide once published (not just the
+ * project's org unit) — the whole point is cross-department inspiration —
+ * but never across companies, same as everything else.
+ */
+export const caseStudies = sqliteTable(
+  "case_studies",
+  {
+    id: id(),
+    companyId: text("company_id").notNull().references(() => companies.id),
+    projectId: text("project_id").notNull().unique().references(() => projects.id),
+    title: text("title").notNull(),
+    summary: text("summary").notNull(),
+    submittedById: text("submitted_by_id").notNull().references(() => users.id),
+    submittedAt: createdAt(),
+    status: text("status").notNull().default("PENDING_APPROVAL"), // PENDING_APPROVAL | PUBLISHED | REJECTED
+    approverUserId: text("approver_user_id").references(() => users.id),
+    decidedAt: integer("decided_at", { mode: "timestamp" }),
+    decisionComment: text("decision_comment"),
+  },
+  (t) => [index("case_studies_company_idx").on(t.companyId)]
+);
+
+export const caseStudyRatings = sqliteTable(
+  "case_study_ratings",
+  {
+    id: id(),
+    caseStudyId: text("case_study_id").notNull().references(() => caseStudies.id),
+    userId: text("user_id").notNull().references(() => users.id),
+    rating: integer("rating").notNull(), // 1..5
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("case_study_ratings_uq").on(t.caseStudyId, t.userId)]
+);
+
+export const caseStudyComments = sqliteTable(
+  "case_study_comments",
+  {
+    id: id(),
+    caseStudyId: text("case_study_id").notNull().references(() => caseStudies.id),
+    userId: text("user_id").notNull().references(() => users.id),
+    body: text("body").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("case_study_comments_study_idx").on(t.caseStudyId)]
+);
+
 /** Table names that carry a companyId and must be scoped by src/lib/db/tenant-db.ts. */
 export const TENANT_TABLE_NAMES = [
   "org_units",
@@ -291,4 +347,7 @@ export const TENANT_TABLE_NAMES = [
   "completions", // scoped indirectly via enrollmentId
   "audit_logs",
   "notifications",
+  "case_studies",
+  "case_study_ratings", // scoped indirectly via caseStudyId
+  "case_study_comments", // scoped indirectly via caseStudyId
 ] as const;

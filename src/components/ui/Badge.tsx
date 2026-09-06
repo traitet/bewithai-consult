@@ -11,6 +11,7 @@ const COLOR_MAP: Record<string, { bg: string; fg: string; border: string }> = {
   REJECTED: { bg: "rgba(228,30,63,.12)", fg: "var(--red)", border: "rgba(228,30,63,.3)" },
   IN_PROGRESS: { bg: "rgba(66,165,245,.15)", fg: "var(--teal)", border: "rgba(66,165,245,.35)" },
   COMPLETED: { bg: "rgba(49,162,76,.12)", fg: "var(--green)", border: "rgba(49,162,76,.3)" },
+  PUBLISHED: { bg: "rgba(49,162,76,.12)", fg: "var(--green)", border: "rgba(49,162,76,.3)" },
   // booking / priority
   CONFIRMED: { bg: "rgba(24,119,242,.12)", fg: "var(--blue)", border: "rgba(24,119,242,.3)" },
   CANCELLED: { bg: "rgba(101,103,107,.12)", fg: "var(--text-faint)", border: "rgba(101,103,107,.25)" },

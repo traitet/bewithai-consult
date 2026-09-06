@@ -12,7 +12,10 @@ import {
   SkillsIcon,
   ReportsIcon,
   SettingsIcon,
+  SuccessStoryIcon,
+  TeamIcon,
 } from "@/components/icons";
+import { Avatar } from "@/components/ui/Avatar";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", Icon: DashboardIcon },
@@ -21,6 +24,7 @@ const NAV_ITEMS = [
   { href: "/bookings", label: "Bookings", Icon: BookingsIcon },
   { href: "/elearning", label: "E-Learning", Icon: ELearningIcon },
   { href: "/skills", label: "Skills", Icon: SkillsIcon },
+  { href: "/success-stories", label: "Success Stories", Icon: SuccessStoryIcon },
   { href: "/reports", label: "Reports", Icon: ReportsIcon },
 ] as const;
 
@@ -28,10 +32,14 @@ export function Sidebar({
   userName,
   userRole,
   userInitials,
+  avatarUrl,
+  showTeamLink,
 }: {
   userName: string;
   userRole: string;
   userInitials: string;
+  avatarUrl?: string | null;
+  showTeamLink: boolean;
 }) {
   const pathname = usePathname();
 
@@ -68,6 +76,20 @@ export function Sidebar({
           );
         })}
 
+        {showTeamLink && (
+          <Link
+            href="/team"
+            className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[13.5px] ${
+              pathname.startsWith("/team")
+                ? "bg-gradient-to-br from-blue/15 to-teal/10 font-semibold text-text"
+                : "font-medium text-text-dim hover:bg-surface-alt"
+            }`}
+          >
+            <TeamIcon className={pathname.startsWith("/team") ? "text-teal" : ""} />
+            <span>My Team</span>
+          </Link>
+        )}
+
         <div className="mx-1 my-2 h-px bg-border-soft" />
 
         <Link
@@ -83,15 +105,13 @@ export function Sidebar({
         </Link>
       </nav>
 
-      <div className="flex items-center gap-2.5 border-t border-border-soft p-4">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue to-teal text-[12px] font-semibold text-white">
-          {userInitials}
-        </div>
+      <Link href="/profile" className="flex items-center gap-2.5 border-t border-border-soft p-4 hover:bg-surface-alt">
+        <Avatar name={userName} initials={userInitials} avatarUrl={avatarUrl} size={32} />
         <div className="flex flex-col">
           <span className="text-[12.5px] font-semibold text-text">{userName}</span>
           <span className="text-[11px] text-text-faint">{userRole}</span>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

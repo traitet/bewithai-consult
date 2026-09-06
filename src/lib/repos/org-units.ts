@@ -52,8 +52,9 @@ export async function resolveApprovalChain(
     current = current.parentId ? byId.get(current.parentId) : undefined;
   }
 
-  // We collected bottom-up (Section, Department, Division); the approval
-  // order is Section -> Department -> Division, and a unit that starts at
-  // Department (no Section) simply has no SECTION_MANAGER step.
-  return chain.reverse();
+  // The walk above starts at the given unit and goes up to the Division, so
+  // `chain` is already in Section -> Department -> Division order (a unit
+  // that starts at Department, with no Section, simply has no
+  // SECTION_MANAGER step — nothing further to reverse here).
+  return chain;
 }

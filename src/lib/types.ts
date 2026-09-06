@@ -8,6 +8,7 @@ export const ROLES = [
   "DEPARTMENT_MANAGER",
   "DIVISION_MANAGER",
   "CONSULTANT",
+  "SUPERADMIN",
 ] as const;
 export type Role = (typeof ROLES)[number];
 
@@ -59,6 +60,12 @@ export type SkillSource = (typeof SKILL_SOURCES)[number];
 
 export const COMPANY_STATUSES = ["ACTIVE", "ONBOARDING", "INACTIVE"] as const;
 export type CompanyStatus = (typeof COMPANY_STATUSES)[number];
+
+/** Roles with companyId=null: cross-company access (bewithai's own staff, not a client-company employee). */
+export const COMPANY_INDEPENDENT_ROLES: Role[] = ["CONSULTANT", "SUPERADMIN"];
+export function isCompanyIndependentRole(role: Role): boolean {
+  return COMPANY_INDEPENDENT_ROLES.includes(role);
+}
 
 /** The ordered approval chain every project workflow is built from. */
 export const APPROVAL_CHAIN: ApproverRole[] = [

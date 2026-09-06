@@ -145,6 +145,57 @@ export function TeamIcon({ className }: IconProps) {
   );
 }
 
+const AI_TOOL_BADGE_STYLE: Record<string, { bg: string; fg: string }> = {
+  chatgpt: { bg: "#e7f7f2", fg: "#10a37f" },
+  "claude code": { bg: "#fbeee7", fg: "#d97757" },
+  "claude cowork": { bg: "#fbeee7", fg: "#d97757" },
+  "co-pilot": { bg: "#eaf1fb", fg: "#1877f2" },
+  copilot: { bg: "#eaf1fb", fg: "#1877f2" },
+};
+
+function aiToolBadgeStyle(name: string) {
+  const key = name.trim().toLowerCase();
+  return AI_TOOL_BADGE_STYLE[key] ?? { bg: "var(--surface-alt)", fg: "var(--text-dim)" };
+}
+
+/** A small glyph badge per AI tool used in course cards — stylized shapes, not brand logos. */
+export function AiToolIcon({ name, className, size = 34 }: IconProps & { name: string; size?: number }) {
+  const key = name.trim().toLowerCase();
+  const { bg, fg } = aiToolBadgeStyle(name);
+
+  function Glyph() {
+    if (key === "chatgpt") {
+      return <path d="M6 13c0-3.9 3.1-7 7-7s7 3.1 7 7-3.1 7-7 7c-1 0-2-.2-2.8-.6L9 20.5l.5-3.8C7.4 15.6 6 14.4 6 13Z" />;
+    }
+    if (key.includes("code")) {
+      return <path d="M11 9 7 13l4 4M15 9l4 4-4 4" />;
+    }
+    if (key.includes("cowork")) {
+      return (
+        <>
+          <circle cx="10.5" cy="12" r="3.2" />
+          <circle cx="15.5" cy="16" r="3.2" />
+        </>
+      );
+    }
+    if (key.includes("copilot") || key.includes("co-pilot")) {
+      return <path d="M13 5 15 12 22 13 15 14 13 21 11 14 4 13 11 12Z" strokeLinejoin="round" />;
+    }
+    return <circle cx="13" cy="13" r="6" />;
+  }
+
+  return (
+    <span
+      className={`flex flex-shrink-0 items-center justify-center rounded-xl ${className ?? ""}`}
+      style={{ background: bg, width: size, height: size }}
+    >
+      <svg width={size * 0.62} height={size * 0.62} viewBox="0 0 26 26" fill="none" stroke={fg} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <Glyph />
+      </svg>
+    </span>
+  );
+}
+
 export function SearchIcon({ className }: IconProps) {
   return (
     <svg width="15" height="15" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} strokeWidth="1.6">

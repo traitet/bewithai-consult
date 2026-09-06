@@ -4,6 +4,7 @@ import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { listCourses, myEnrollments } from "@/lib/repos/elearning";
 import { enrollAction, updateProgressAction, completeCourseAction } from "../actions";
+import { AiToolIcon } from "@/components/icons";
 
 const LEVEL_LABELS = ["", "L1 เริ่มต้น", "L2 ปานกลาง", "L3 ชำนาญ", "L4 เชี่ยวชาญ"];
 
@@ -26,9 +27,10 @@ export default async function CourseDetailPage(props: PageProps<"/elearning/[id]
       <div className="flex gap-6">
         <div className="flex-1 flex-col gap-5">
           <section className="mb-5 rounded-2xl border border-border bg-surface p-6">
-            <span className="mb-2 inline-block rounded-md bg-blue/10 px-2 py-1 text-[10.5px] font-semibold text-blue">
-              {course.aiToolName}
-            </span>
+            <div className="mb-3 flex items-center gap-3">
+              <AiToolIcon name={course.aiToolName} size={44} />
+              <span className="text-[11px] font-semibold text-text-faint">{course.aiToolName}</span>
+            </div>
             <h1 className="mb-2 font-heading text-[20px] font-semibold text-text">{course.title}</h1>
             <p className="mb-4 text-[13px] text-text-dim">{course.description}</p>
             <div className="flex gap-6 text-[12px] text-text-faint">

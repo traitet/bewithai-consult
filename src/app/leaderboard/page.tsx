@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
@@ -50,9 +51,10 @@ export default async function LeaderboardPage() {
 
       <div className="flex flex-col gap-2">
         {rows.map((row) => (
-          <div
+          <Link
             key={row.userId}
-            className={`flex items-center gap-4 rounded-xl border px-4 py-3 ${
+            href={`/members/${row.userId}`}
+            className={`flex items-center gap-4 rounded-xl border px-4 py-3 transition-colors hover:border-blue ${
               RANK_STYLES[row.rank] ?? (row.userId === session.userId ? "border-blue/40 bg-blue/5" : "border-border bg-surface")
             }`}
           >
@@ -83,7 +85,7 @@ export default async function LeaderboardPage() {
             </div>
 
             <span className="w-20 flex-shrink-0 text-right text-[14px] font-bold text-text">{row.score.toLocaleString()}</span>
-          </div>
+          </Link>
         ))}
         {rows.length === 0 && (
           <div className="rounded-2xl border border-border bg-surface px-5 py-8 text-center text-[12.5px] text-text-faint">

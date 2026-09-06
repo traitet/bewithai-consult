@@ -6,6 +6,7 @@ import { listSkillDirectory } from "@/lib/repos/skills";
 import { listAiTools } from "@/lib/repos/consultants";
 import { listOrgUnits } from "@/lib/repos/org-units";
 import { OrgUnitFilter } from "@/components/ui/OrgUnitFilter";
+import { SkillLevelDial } from "@/components/ui/SkillLevelDial";
 import { setMySkillLevelAction } from "./actions";
 
 const LEVEL_LABELS = ["", "Beginner", "Intermediate", "Advanced", "Expert"];
@@ -14,11 +15,7 @@ const LEVEL_ORDER = ["DIVISION", "DEPARTMENT", "SECTION"];
 function LevelDots({ level }: { level: number }) {
   return (
     <div className="flex items-center gap-2">
-      <div className="flex gap-1">
-        {[1, 2, 3, 4].map((n) => (
-          <div key={n} className={`h-2 w-2 rounded-sm ${n <= level ? "bg-teal" : "bg-surface-alt"}`} />
-        ))}
-      </div>
+      <SkillLevelDial level={level} />
       {level > 0 && <span className="text-[10.5px] text-text-faint">L{level}</span>}
     </div>
   );

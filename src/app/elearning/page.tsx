@@ -4,6 +4,7 @@ import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { listCourses, myEnrollments } from "@/lib/repos/elearning";
 import { enrollAction, updateProgressAction, completeCourseAction } from "./actions";
+import { AiToolIcon } from "@/components/icons";
 
 const LEVEL_LABELS = ["", "L1 เริ่มต้น", "L2 ปานกลาง", "L3 ชำนาญ", "L4 เชี่ยวชาญ"];
 
@@ -35,7 +36,7 @@ export default async function ELearningPage() {
           return (
             <div key={course.id} className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
               <div className="flex items-center justify-between">
-                <span className="rounded-md bg-blue/10 px-2 py-1 text-[10.5px] font-semibold text-blue">{course.aiToolName}</span>
+                <AiToolIcon name={course.aiToolName} />
                 <span className="text-[10.5px] text-text-faint">ปลดล็อก {LEVEL_LABELS[course.unlocksLevel]}</span>
               </div>
               <Link href={`/elearning/${course.id}`} className="font-heading text-[14px] font-semibold text-text hover:text-blue">

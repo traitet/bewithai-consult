@@ -15,18 +15,20 @@ import {
   SuccessStoryIcon,
   TeamIcon,
   ApprovalsIcon,
+  LeaderboardIcon,
 } from "@/components/icons";
 import { Avatar } from "@/components/ui/Avatar";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "แดชบอร์ด", Icon: DashboardIcon },
+  { href: "/issues", label: "ปัญหา", Icon: IssuesIcon },
   { href: "/projects", label: "โปรเจกต์", Icon: ProjectsIcon },
-  { href: "/issues", label: "ปัญหา (Issues)", Icon: IssuesIcon },
   { href: "/approvals", label: "การอนุมัติ", Icon: ApprovalsIcon },
   { href: "/bookings", label: "นัดหมาย", Icon: BookingsIcon },
   { href: "/elearning", label: "E-Learning", Icon: ELearningIcon },
   { href: "/skills", label: "ทักษะ (Skills)", Icon: SkillsIcon },
   { href: "/performance", label: "ผลงานพนักงาน", Icon: TeamIcon },
+  { href: "/leaderboard", label: "อันดับ (Leaderboard)", Icon: LeaderboardIcon },
   { href: "/success-stories", label: "เรื่องราวความสำเร็จ", Icon: SuccessStoryIcon },
   { href: "/reports", label: "รายงาน", Icon: ReportsIcon },
 ] as const;

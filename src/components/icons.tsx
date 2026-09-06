@@ -117,6 +117,15 @@ export function ApprovalsIcon({ className }: IconProps) {
   );
 }
 
+export function LeaderboardIcon({ className }: IconProps) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} {...strokeProps}>
+      <path d="M6.5 17.5v-6h3v6M10.5 17.5v-9.5h3v9.5M2.5 17.5v-3.5h3v3.5" />
+      <path d="M9.5 2.5h4l-.6 4.2c-.2 1.3-1.3 2.3-2.4 2.3s-2.2-1-2.4-2.3z" />
+    </svg>
+  );
+}
+
 export function SuccessStoryIcon({ className }: IconProps) {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} {...strokeProps}>

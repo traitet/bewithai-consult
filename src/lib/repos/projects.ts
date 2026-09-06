@@ -5,27 +5,73 @@ import type { Scope } from "@/lib/db/tenant-db";
 import { resolveApprovalChain } from "@/lib/repos/org-units";
 import { APPROVAL_CHAIN } from "@/lib/types";
 
-/** `companyId: null` means "every company" — only reachable for a company-independent scope. */
-export async function listProjects(scope: Scope, companyId: string | null) {
+/**
+ * `companyId: null` means "every company" — only reachable for a
+ * company-independent scope. `search`, if given, matches (case-insensitive,
+ * substring) against the project title, its originating issue's title, or
+ * the requester's name.
+ */
+export async function listProjects(scope: Scope, companyId: string | null, search?: string) {
   if (scope.companyId !== null && scope.companyId !== companyId) {
     throw new Error("Forbidden: not your company");
   }
-  return db
+  const rows = await db
     .select({
       id: projects.id,
       title: projects.title,
       status: projects.status,
+      progressPct: projects.progressPct,
       createdAt: projects.createdAt,
       issueTitle: issues.title,
       orgUnitName: orgUnits.name,
       companyName: companies.name,
+      requestedById: issues.createdById,
+      requestedByName: users.name,
+      beforeHoursPerWeek: benefitSummaries.beforeHoursPerWeek,
+      afterHoursPerWeek: benefitSummaries.afterHoursPerWeek,
     })
     .from(projects)
     .innerJoin(issues, eq(projects.issueId, issues.id))
     .innerJoin(orgUnits, eq(projects.orgUnitId, orgUnits.id))
     .innerJoin(companies, eq(projects.companyId, companies.id))
+    .innerJoin(users, eq(issues.createdById, users.id))
+    .leftJoin(benefitSummaries, eq(benefitSummaries.projectId, projects.id))
     .where(companyId ? eq(projects.companyId, companyId) : undefined)
     .orderBy(desc(projects.createdAt));
+
+  // Confirmed reduction target = the most recently APPROVED approval step's
+  // targetHoursPerWeek for that project's workflow (each approver refines it
+  // as the project climbs the chain; the latest approval is authoritative).
+  const projectIds = rows.map((r) => r.id);
+  const workflows = projectIds.length ? await db.select().from(approvalWorkflows) : [];
+  const relevantWorkflows = workflows.filter((w) => projectIds.includes(w.projectId));
+  const workflowIds = relevantWorkflows.map((w) => w.id);
+  const steps = workflowIds.length ? await db.select().from(approvalSteps) : [];
+  const targetByProjectId = new Map<string, number>();
+  for (const wf of relevantWorkflows) {
+    const wfSteps = steps
+      .filter((s) => s.workflowId === wf.id && s.decision === "APPROVED" && s.targetHoursPerWeek != null)
+      .sort((a, b) => b.stepNumber - a.stepNumber);
+    if (wfSteps[0]) targetByProjectId.set(wf.projectId, wfSteps[0].targetHoursPerWeek!);
+  }
+
+  const withTarget = rows.map((r) => ({ ...r, targetHoursPerWeek: targetByProjectId.get(r.id) ?? null }));
+
+  if (!search?.trim()) return withTarget;
+  const needle = search.trim().toLowerCase();
+  return withTarget.filter(
+    (r) =>
+      r.title.toLowerCase().includes(needle) ||
+      r.issueTitle.toLowerCase().includes(needle) ||
+      r.requestedByName.toLowerCase().includes(needle)
+  );
+}
+
+export async function updateProjectProgress(scope: Scope, projectId: string, progressPct: number) {
+  const project = await getProject(scope, projectId);
+  if (!project) throw new Error("Project not found");
+  const clamped = Math.max(0, Math.min(100, Math.round(progressPct)));
+  await db.update(projects).set({ progressPct: clamped }).where(eq(projects.id, projectId));
 }
 
 export async function getProject(scope: Scope, projectId: string) {

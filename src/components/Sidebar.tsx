@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { href: "/bookings", label: "นัดหมาย", Icon: BookingsIcon },
   { href: "/elearning", label: "E-Learning", Icon: ELearningIcon },
   { href: "/skills", label: "ทักษะ (Skills)", Icon: SkillsIcon },
+  { href: "/performance", label: "ผลงานพนักงาน", Icon: TeamIcon },
   { href: "/success-stories", label: "เรื่องราวความสำเร็จ", Icon: SuccessStoryIcon },
   { href: "/reports", label: "รายงาน", Icon: ReportsIcon },
 ] as const;

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
@@ -37,7 +38,9 @@ export default async function ELearningPage() {
                 <span className="rounded-md bg-blue/10 px-2 py-1 text-[10.5px] font-semibold text-blue">{course.aiToolName}</span>
                 <span className="text-[10.5px] text-text-faint">ปลดล็อก {LEVEL_LABELS[course.unlocksLevel]}</span>
               </div>
-              <span className="font-heading text-[14px] font-semibold text-text">{course.title}</span>
+              <Link href={`/elearning/${course.id}`} className="font-heading text-[14px] font-semibold text-text hover:text-blue">
+                {course.title}
+              </Link>
               <p className="text-[12px] text-text-dim">{course.description}</p>
               <span className="text-[11px] text-text-faint">ระยะเวลา {course.durationHours} ชม. · เกณฑ์ผ่าน {course.passingScore}%</span>
 

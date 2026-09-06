@@ -6,7 +6,7 @@ import { scopeFromSession } from "@/lib/db/tenant-db";
 import { getProjectDetail } from "@/lib/repos/projects";
 import { getCaseStudyByProjectId } from "@/lib/repos/case-studies";
 import { Badge } from "@/components/ui/Badge";
-import { approveStepAction, rejectStepAction } from "./actions";
+import { approveStepAction, rejectStepAction, updateProgressAction } from "./actions";
 import { submitCaseStudyAction } from "@/app/success-stories/actions";
 import { ROLE_LABELS } from "@/lib/labels";
 import type { Role } from "@/lib/types";
@@ -48,12 +48,40 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
             )}
           </section>
 
+          <section className="rounded-2xl border border-border bg-surface p-5">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="font-heading text-[14px] font-semibold text-text">Delivery Progress</h2>
+              <span className="text-[12.5px] font-semibold text-text">{project.progressPct}%</span>
+            </div>
+            <div className="mb-3 h-2.5 w-full overflow-hidden rounded-full bg-surface-alt">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-blue to-teal transition-all"
+                style={{ width: `${project.progressPct}%` }}
+              />
+            </div>
+            <form action={updateProgressAction} className="flex items-center gap-2">
+              <input type="hidden" name="projectId" value={project.id} />
+              <input
+                name="progressPct"
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                defaultValue={project.progressPct}
+                className="flex-1"
+              />
+              <button type="submit" className="rounded-md border border-border px-3 py-1.5 text-[11px] font-semibold text-text-dim hover:border-blue hover:text-blue">
+                อัปเดตความคืบหน้า
+              </button>
+            </form>
+          </section>
+
           {benefit && (
             <section className="rounded-2xl border border-border bg-surface p-5">
               <h2 className="mb-3 font-heading text-[14px] font-semibold text-text">Benefit Summary</h2>
               <div className="grid grid-cols-3 gap-3">
-                <Metric label="Before" value={`${benefit.beforeHoursPerWeek} hrs/wk`} />
-                <Metric label="After" value={`${benefit.afterHoursPerWeek} hrs/wk`} />
+                <Metric label="เวลาทำงานที่ใช้ก่อนหน้า (Before)" value={`${benefit.beforeHoursPerWeek} hrs/wk`} />
+                <Metric label="เวลาทำงานที่ใช้ปัจจุบัน (After)" value={`${benefit.afterHoursPerWeek} hrs/wk`} />
                 <Metric
                   label="Saved / Year"
                   value={`${Math.round(Math.max(0, benefit.beforeHoursPerWeek - benefit.afterHoursPerWeek) * 52)} hrs`}

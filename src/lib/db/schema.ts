@@ -157,6 +157,27 @@ export const projects = sqliteTable(
   (t) => [index("projects_company_idx").on(t.companyId)]
 );
 
+/**
+ * One row per person contributing to a project's before/after benefit
+ * estimate — the same frequency x minutes-per-occurrence breakdown as
+ * issue_impacts, but tagged BEFORE/AFTER and expressed in hours/week (see
+ * src/lib/workload.ts) since benefit_summaries tracks a weekly rate.
+ */
+export const benefitImpacts = sqliteTable(
+  "benefit_impacts",
+  {
+    id: id(),
+    projectId: text("project_id").notNull().references(() => projects.id),
+    userId: text("user_id").notNull().references(() => users.id),
+    phase: text("phase").notNull(), // BEFORE | AFTER
+    frequencyUnit: text("frequency_unit").notNull(), // PER_DAY | PER_WEEK | PER_MONTH | PER_YEAR
+    frequencyCount: real("frequency_count").notNull(),
+    minutesPerOccurrence: real("minutes_per_occurrence").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("benefit_impacts_project_idx").on(t.projectId)]
+);
+
 export const approvalWorkflows = sqliteTable(
   "approval_workflows",
   {

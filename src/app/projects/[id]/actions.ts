@@ -5,6 +5,7 @@ import { requireSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { approveStep, rejectStep } from "@/lib/repos/approvals";
 import { updateProjectProgress, updateProjectPlan } from "@/lib/repos/projects";
+import { addBenefitImpact, removeBenefitImpact } from "@/lib/repos/benefit";
 
 export async function updateProgressAction(formData: FormData): Promise<void> {
   const session = await requireSession();
@@ -24,6 +25,33 @@ export async function updatePlanAction(formData: FormData): Promise<void> {
 
   if (!targetCompletionDate) throw new Error("Pick a target completion date.");
   await updateProjectPlan(scope, projectId, new Date(targetCompletionDate));
+  revalidatePath(`/projects/${projectId}`);
+}
+
+export async function addBenefitImpactAction(formData: FormData): Promise<void> {
+  const session = await requireSession();
+  const scope = scopeFromSession(session);
+
+  const projectId = String(formData.get("projectId") ?? "");
+  const userId = String(formData.get("userId") ?? "");
+  const phase = String(formData.get("phase") ?? "");
+  const frequencyUnit = String(formData.get("frequencyUnit") ?? "");
+  const frequencyCount = Number(formData.get("frequencyCount") ?? 0);
+  const minutesPerOccurrence = Number(formData.get("minutesPerOccurrence") ?? 0);
+
+  if (!userId) throw new Error("Pick who this applies to.");
+  await addBenefitImpact(scope, projectId, { userId, phase, frequencyUnit, frequencyCount, minutesPerOccurrence });
+  revalidatePath(`/projects/${projectId}`);
+}
+
+export async function removeBenefitImpactAction(formData: FormData): Promise<void> {
+  const session = await requireSession();
+  const scope = scopeFromSession(session);
+
+  const projectId = String(formData.get("projectId") ?? "");
+  const impactId = String(formData.get("impactId") ?? "");
+
+  await removeBenefitImpact(scope, projectId, impactId);
   revalidatePath(`/projects/${projectId}`);
 }
 

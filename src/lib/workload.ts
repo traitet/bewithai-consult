@@ -29,13 +29,25 @@ export function isFrequencyUnit(value: string): value is FrequencyUnit {
   return (FREQUENCY_UNITS as readonly string[]).includes(value);
 }
 
+function rawHoursPerYear(input: { frequencyUnit: FrequencyUnit; frequencyCount: number; minutesPerOccurrence: number }): number {
+  const occurrencesPerYear = input.frequencyCount * OCCURRENCES_PER_YEAR[input.frequencyUnit];
+  return (occurrencesPerYear * input.minutesPerOccurrence) / 60;
+}
+
 /** hours/year lost by one person = (times per year) x (minutes per time) / 60. */
 export function computeHoursPerYear(input: {
   frequencyUnit: FrequencyUnit;
   frequencyCount: number;
   minutesPerOccurrence: number;
 }): number {
-  const occurrencesPerYear = input.frequencyCount * OCCURRENCES_PER_YEAR[input.frequencyUnit];
-  const hours = (occurrencesPerYear * input.minutesPerOccurrence) / 60;
-  return Math.round(hours * 10) / 10;
+  return Math.round(rawHoursPerYear(input) * 10) / 10;
+}
+
+/** Same calculation, expressed as hours/week (hours/year ÷ 50 working weeks) — for benefit before/after tracking. */
+export function computeHoursPerWeek(input: {
+  frequencyUnit: FrequencyUnit;
+  frequencyCount: number;
+  minutesPerOccurrence: number;
+}): number {
+  return Math.round((rawHoursPerYear(input) / WORK_WEEKS_PER_YEAR) * 100) / 100;
 }

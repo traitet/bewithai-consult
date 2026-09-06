@@ -5,13 +5,18 @@ import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { getProjectDetail } from "@/lib/repos/projects";
 import { getCaseStudyByProjectId } from "@/lib/repos/case-studies";
+import { listBenefitImpacts, BENEFIT_PHASES, type BenefitPhase } from "@/lib/repos/benefit";
+import { listCompanyUsers } from "@/lib/repos/users";
 import { Badge } from "@/components/ui/Badge";
-import { approveStepAction, rejectStepAction, updateProgressAction, updatePlanAction } from "./actions";
+import { approveStepAction, rejectStepAction, updateProgressAction, updatePlanAction, removeBenefitImpactAction } from "./actions";
 import { submitCaseStudyAction } from "@/app/success-stories/actions";
+import { AddBenefitImpactForm } from "./AddBenefitImpactForm";
+import { FREQUENCY_LABELS_TH, type FrequencyUnit } from "@/lib/workload";
 import { ROLE_LABELS } from "@/lib/labels";
 import type { Role } from "@/lib/types";
 
 const PUBLISHABLE_STATUSES = ["APPROVED", "IN_PROGRESS", "COMPLETED"];
+const PHASE_LABELS_TH: Record<BenefitPhase, string> = { BEFORE: "ก่อนใช้ AI (Before)", AFTER: "หลังใช้ AI (After)" };
 
 export default async function ProjectDetailPage(props: PageProps<"/projects/[id]">) {
   const { id } = await props.params;
@@ -23,6 +28,10 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
   if (!detail) notFound();
   const { project, issue, orgUnit, benefit, steps, delay } = detail;
   const existingCaseStudy = await getCaseStudyByProjectId(scope, project.id);
+  const [benefitImpacts, companyUsers] = await Promise.all([
+    listBenefitImpacts(scope, project.id),
+    listCompanyUsers(scope, project.companyId),
+  ]);
 
   return (
     <AppShell title={project.title}>
@@ -128,20 +137,61 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
             )}
           </section>
 
-          {benefit && (
-            <section className="rounded-2xl border border-border bg-surface p-5">
-              <h2 className="mb-3 font-heading text-[14px] font-semibold text-text">Benefit Summary</h2>
-              <div className="grid grid-cols-3 gap-3">
-                <Metric label="เวลาทำงานที่ใช้ก่อนหน้า (Before)" value={`${benefit.beforeHoursPerWeek} hrs/wk`} />
-                <Metric label="เวลาทำงานที่ใช้ปัจจุบัน (After)" value={`${benefit.afterHoursPerWeek} hrs/wk`} />
-                <Metric
-                  label="Saved / Year"
-                  value={`${Math.round(Math.max(0, benefit.beforeHoursPerWeek - benefit.afterHoursPerWeek) * 52)} hrs`}
-                  accent
-                />
-              </div>
-            </section>
-          )}
+          <section className="rounded-2xl border border-border bg-surface p-5">
+            <h2 className="mb-3 font-heading text-[14px] font-semibold text-text">Benefit Summary</h2>
+            <div className="mb-4 grid grid-cols-3 gap-3">
+              <Metric label="เวลาทำงานที่ใช้ก่อนหน้า (Before)" value={`${benefit?.beforeHoursPerWeek ?? 0} hrs/wk`} />
+              <Metric label="เวลาทำงานที่ใช้ปัจจุบัน (After)" value={`${benefit?.afterHoursPerWeek ?? 0} hrs/wk`} />
+              <Metric
+                label="Saved / Year"
+                value={`${Math.round(Math.max(0, (benefit?.beforeHoursPerWeek ?? 0) - (benefit?.afterHoursPerWeek ?? 0)) * 52)} hrs`}
+                accent
+              />
+            </div>
+
+            <p className="mb-3 text-[11.5px] text-text-faint">
+              กรอกแบบละเอียดรายบุคคล (ความถี่ × เวลาที่เสียต่อครั้ง) — ระบบจะรวมเป็น hrs/wk ด้านบนให้อัตโนมัติ
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              {BENEFIT_PHASES.map((phase) => {
+                const rows = benefitImpacts.filter((i) => i.phase === phase);
+                return (
+                  <div key={phase} className="flex flex-col gap-2.5">
+                    <span className="text-[12px] font-semibold text-text">{PHASE_LABELS_TH[phase]}</span>
+                    {rows.length > 0 && (
+                      <div className="flex flex-col gap-1.5">
+                        {rows.map((impact) => (
+                          <div
+                            key={impact.id}
+                            className="flex items-center justify-between rounded-lg border border-border-soft px-3 py-2 text-[11.5px]"
+                          >
+                            <div className="flex flex-col">
+                              <span className="font-medium text-text">{impact.userName}</span>
+                              <span className="text-text-faint">
+                                {impact.frequencyCount} {FREQUENCY_LABELS_TH[impact.frequencyUnit as FrequencyUnit]} ·{" "}
+                                {impact.minutesPerOccurrence} นาที/ครั้ง
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-semibold text-text">{impact.hoursPerWeek} hrs/wk</span>
+                              <form action={removeBenefitImpactAction}>
+                                <input type="hidden" name="projectId" value={project.id} />
+                                <input type="hidden" name="impactId" value={impact.id} />
+                                <button type="submit" className="text-text-faint hover:text-red">
+                                  ลบ
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <AddBenefitImpactForm projectId={project.id} phase={phase} companyUsers={companyUsers} />
+                  </div>
+                );
+              })}
+            </div>
+          </section>
 
           <section className="rounded-2xl border border-border bg-surface p-5">
             <h2 className="mb-3 font-heading text-[14px] font-semibold text-text">Success Story</h2>

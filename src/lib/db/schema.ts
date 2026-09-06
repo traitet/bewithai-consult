@@ -297,6 +297,7 @@ export const enrollments = sqliteTable(
     courseId: text("course_id").notNull().references(() => courses.id),
     progressPct: integer("progress_pct").notNull().default(0),
     status: text("status").notNull().default("ENROLLED"),
+    preTestScore: integer("pre_test_score"), // baseline check before starting the chapters, informational only
     startedAt: createdAt(),
   },
   (t) => [
@@ -308,9 +309,11 @@ export const enrollments = sqliteTable(
 export const completions = sqliteTable("completions", {
   id: id(),
   enrollmentId: text("enrollment_id").notNull().unique().references(() => enrollments.id),
-  score: integer("score").notNull(),
+  score: integer("score").notNull(), // post-test score
   levelBefore: integer("level_before").notNull(),
   levelAfter: integer("level_after").notNull(),
+  satisfactionRating: integer("satisfaction_rating"), // 1-5, course satisfaction feedback
+  satisfactionComment: text("satisfaction_comment"),
   completedAt: createdAt(),
 });
 

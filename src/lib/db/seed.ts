@@ -97,11 +97,11 @@ async function main() {
   const passwordHash = await bcrypt.hash(DEV_PASSWORD, 10);
 
   console.log("Seeding AI tools + skill levels...");
-  const [claudeCowork, claudeCode, chatGpt] = await db
+  const [claudeCowork, claudeCode, chatGpt, coPilot] = await db
     .insert(aiTools)
-    .values([{ name: "Claude Cowork" }, { name: "Claude Code" }, { name: "ChatGPT" }])
+    .values([{ name: "Claude Cowork" }, { name: "Claude Code" }, { name: "ChatGPT" }, { name: "Co-Pilot" }])
     .returning();
-  const allTools = [claudeCowork, claudeCode, chatGpt];
+  const allTools = [claudeCowork, claudeCode, chatGpt, coPilot];
 
   await db.insert(skillLevelDefs).values([
     { level: 1, name: "Beginner", description: "Guided use only" },
@@ -116,6 +116,7 @@ async function main() {
     { aiToolId: claudeCowork.id, title: "Advanced Prompt Design", description: "Design reliable multi-step prompts with Claude Cowork.", durationHours: 3, unlocksLevel: 3, passingScore: 75 },
     { aiToolId: chatGpt.id, title: "ChatGPT for Business Analysis", description: "Using ChatGPT for reporting and analysis work.", durationHours: 2, unlocksLevel: 2, passingScore: 70 },
     { aiToolId: claudeCode.id, title: "Automating Workflows with Claude Code", description: "Building repeatable automations.", durationHours: 4, unlocksLevel: 3, passingScore: 75 },
+    { aiToolId: coPilot.id, title: "Microsoft Copilot Essentials", description: "Using Copilot across Word, Excel, Outlook and PowerPoint for everyday office work.", durationHours: 2.5, unlocksLevel: 2, passingScore: 70 },
   ]);
 
   console.log("Seeding companies...");

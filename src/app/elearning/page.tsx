@@ -3,7 +3,7 @@ import { AppShell } from "@/components/AppShell";
 import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { listCourses, myEnrollments } from "@/lib/repos/elearning";
-import { enrollAction, updateProgressAction, completeCourseAction } from "./actions";
+import { enrollAction, updateProgressAction } from "./actions";
 import { AiToolIcon } from "@/components/icons";
 
 const LEVEL_LABELS = ["", "L1 เริ่มต้น", "L2 ปานกลาง", "L3 ชำนาญ", "L4 เชี่ยวชาญ"];
@@ -17,11 +17,17 @@ export default async function ELearningPage() {
   const enrollmentByCourse = new Map(myEnrollmentRows.map((e) => [e.courseId, e]));
 
   return (
-    <AppShell title="E-Learning">
-      <div className="mb-5 rounded-2xl border border-border bg-surface p-4 text-[12px] text-text-faint">
-        คอร์สเรียนแบบ step-by-step สำหรับ ChatGPT, Claude Cowork และ Claude Code — ตอนนี้เป็นเวอร์ชันเริ่มต้น
-        (ลงทะเบียนเรียน ติดตามความคืบหน้า และกรอกคะแนน post-test ได้) เนื้อหาแบบ step-by-step เต็มรูปแบบ (10 บท ×
-        10 step ต่อคอร์ส) พร้อม pre-test และแบบสอบถามความพึงพอใจ กำลังทยอยเพิ่มเข้ามาครับ
+    <AppShell title="เรียนออนไลน์">
+      <div className="mb-5 flex items-center justify-between rounded-2xl border border-border bg-surface p-4">
+        <p className="text-[12px] text-text-faint">
+          คอร์สเรียนแบบ step-by-step สำหรับ ChatGPT, Claude Cowork, Claude Code และ Co-Pilot พร้อมแบบทดสอบก่อน/หลังเรียน
+          และแบบสอบถามความพึงพอใจในแต่ละคอร์ส
+        </p>
+        {session.role !== "MEMBER" && (
+          <Link href="/elearning/report" className="ml-4 flex-shrink-0 text-[12px] font-semibold text-blue hover:underline">
+            รายงานความคืบหน้า →
+          </Link>
+        )}
       </div>
 
       {!session.companyId && (
@@ -69,13 +75,12 @@ export default async function ELearningPage() {
                           อัปเดต
                         </button>
                       </form>
-                      <form action={completeCourseAction} className="flex gap-2">
-                        <input type="hidden" name="courseId" value={course.id} />
-                        <input name="score" type="number" min="0" max="100" placeholder="คะแนน post-test" required className="input flex-1 py-1.5 text-[11.5px]" />
-                        <button type="submit" className="rounded-md bg-green px-2.5 text-[11px] font-semibold text-white">
-                          จบคอร์ส
-                        </button>
-                      </form>
+                      <Link
+                        href={`/elearning/${course.id}`}
+                        className="rounded-md bg-green py-1.5 text-center text-[11px] font-semibold text-white"
+                      >
+                        {enrollment.preTestScore === null ? "ทำแบบทดสอบก่อนเรียน →" : "ทำแบบทดสอบหลังเรียนเพื่อจบคอร์ส →"}
+                      </Link>
                     </div>
                   )}
 

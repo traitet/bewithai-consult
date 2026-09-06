@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
-import { enrollInCourse, updateProgress, completeCourse } from "@/lib/repos/elearning";
+import { enrollInCourse, updateProgress, completeCourse, submitPreTest } from "@/lib/repos/elearning";
 
 export async function enrollAction(formData: FormData): Promise<void> {
   const session = await requireSession();
@@ -27,7 +27,20 @@ export async function completeCourseAction(formData: FormData): Promise<void> {
   const scope = scopeFromSession(session);
   const courseId = String(formData.get("courseId") ?? "");
   const score = Number(formData.get("score") ?? 0);
-  await completeCourse(scope, courseId, score);
+  const satisfactionRatingRaw = formData.get("satisfactionRating");
+  const satisfactionRating = satisfactionRatingRaw ? Number(satisfactionRatingRaw) : undefined;
+  const satisfactionComment = String(formData.get("satisfactionComment") ?? "").trim() || undefined;
+
+  await completeCourse(scope, courseId, score, { satisfactionRating, satisfactionComment });
   revalidatePath("/elearning");
   revalidatePath("/skills");
+}
+
+export async function submitPreTestAction(formData: FormData): Promise<void> {
+  const session = await requireSession();
+  const scope = scopeFromSession(session);
+  const courseId = String(formData.get("courseId") ?? "");
+  const score = Number(formData.get("score") ?? 0);
+  await submitPreTest(scope, courseId, score);
+  revalidatePath("/elearning");
 }

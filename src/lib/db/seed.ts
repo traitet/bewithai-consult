@@ -340,17 +340,23 @@ async function main() {
     before: number;
     after: number;
     finalStatus: "REJECTED" | "PENDING_SECTION" | "PENDING_DEPT" | "PENDING_DIVISION" | "APPROVED" | "IN_PROGRESS" | "COMPLETED";
+    // Delivery plan (only meaningful once a project has cleared final approval):
+    // how many days ago the plan started, how many days the plan allotted, and
+    // manual progress logged so far — deliberately mixed on-track/delayed for demo realism.
+    planStartedDaysAgo?: number;
+    planDurationDays?: number;
+    progressPct?: number;
   };
   const PROJECT_PLAN: ProjectPlan[] = [
     { issueTitle: "Manual invoice reconciliation takes ~6 hrs/week", projectTitle: "Invoice Reconciliation Copilot", desc: "Use Claude Code to auto-extract invoice line items and reconcile against ERP records.", consultant: saowalak, before: 11, after: 1.7, finalStatus: "PENDING_DIVISION" },
     { issueTitle: "Sales quotes are re-typed by hand into 3 systems", projectTitle: "Quote Sync Assistant", desc: "Generate quotes once with ChatGPT and sync across CRM/ERP/proposal doc.", consultant: traitetConsultant, before: 8, after: 2, finalStatus: "PENDING_DEPT" },
-    { issueTitle: "First-response ticket triage is fully manual", projectTitle: "Support Ticket Triage AI", desc: "Claude Cowork classifies and routes L1 tickets automatically.", consultant: somchai, before: 15, after: 4.5, finalStatus: "IN_PROGRESS" },
-    { issueTitle: "Defect report summaries take a full day to compile", projectTitle: "QA Defect Summary Generator", desc: "Claude Code drafts the weekly defect summary from raw logs.", consultant: saowalak, before: 8, after: 1.5, finalStatus: "COMPLETED" },
-    { issueTitle: "Supplier PO status checks require manual email follow-up", projectTitle: "PO Status Assistant", desc: "ChatGPT drafts and tracks supplier follow-up emails.", consultant: traitetConsultant, before: 5, after: 1, finalStatus: "APPROVED" },
-    { issueTitle: "Onboarding paperwork is duplicated across systems", projectTitle: "Onboarding Form Autofill", desc: "Claude Cowork pre-fills repeated onboarding fields from one intake form.", consultant: somchai, before: 4, after: 0.5, finalStatus: "COMPLETED" },
+    { issueTitle: "First-response ticket triage is fully manual", projectTitle: "Support Ticket Triage AI", desc: "Claude Cowork classifies and routes L1 tickets automatically.", consultant: somchai, before: 15, after: 4.5, finalStatus: "IN_PROGRESS", planStartedDaysAgo: 40, planDurationDays: 60, progressPct: 35 },
+    { issueTitle: "Defect report summaries take a full day to compile", projectTitle: "QA Defect Summary Generator", desc: "Claude Code drafts the weekly defect summary from raw logs.", consultant: saowalak, before: 8, after: 1.5, finalStatus: "COMPLETED", planStartedDaysAgo: 70, planDurationDays: 60, progressPct: 100 },
+    { issueTitle: "Supplier PO status checks require manual email follow-up", projectTitle: "PO Status Assistant", desc: "ChatGPT drafts and tracks supplier follow-up emails.", consultant: traitetConsultant, before: 5, after: 1, finalStatus: "APPROVED", planStartedDaysAgo: 5, planDurationDays: 60, progressPct: 5 },
+    { issueTitle: "Onboarding paperwork is duplicated across systems", projectTitle: "Onboarding Form Autofill", desc: "Claude Cowork pre-fills repeated onboarding fields from one intake form.", consultant: somchai, before: 4, after: 0.5, finalStatus: "COMPLETED", planStartedDaysAgo: 45, planDurationDays: 30, progressPct: 100 },
     { issueTitle: "Renewal risk isn't flagged until it's too late", projectTitle: "Renewal Risk Radar", desc: "Claude Code flags at-risk accounts from usage + support signals.", consultant: saowalak, before: 6, after: 2, finalStatus: "PENDING_SECTION" },
-    { issueTitle: "Campaign performance reports take 3 days to compile", projectTitle: "Marketing Report Copilot", desc: "ChatGPT compiles the monthly cross-dashboard performance report.", consultant: traitetConsultant, before: 10, after: 3, finalStatus: "IN_PROGRESS" },
-    { issueTitle: "Downtime root-cause logs are inconsistent", projectTitle: "Root-Cause Log Assistant", desc: "Claude Cowork standardizes downtime root-cause notes as they're written.", consultant: somchai, before: 5, after: 1.5, finalStatus: "APPROVED" },
+    { issueTitle: "Campaign performance reports take 3 days to compile", projectTitle: "Marketing Report Copilot", desc: "ChatGPT compiles the monthly cross-dashboard performance report.", consultant: traitetConsultant, before: 10, after: 3, finalStatus: "IN_PROGRESS", planStartedDaysAgo: 20, planDurationDays: 60, progressPct: 45 },
+    { issueTitle: "Downtime root-cause logs are inconsistent", projectTitle: "Root-Cause Log Assistant", desc: "Claude Cowork standardizes downtime root-cause notes as they're written.", consultant: somchai, before: 5, after: 1.5, finalStatus: "APPROVED", planStartedDaysAgo: 30, planDurationDays: 40, progressPct: 10 },
     { issueTitle: "Repeated questions aren't answered from a knowledge base", projectTitle: "Support KB Auto-Answer", desc: "Claude Code drafts KB-grounded replies for repeat questions.", consultant: saowalak, before: 7, after: 2, finalStatus: "REJECTED" },
   ];
 
@@ -381,6 +387,17 @@ async function main() {
           : plan.finalStatus,
       })
       .returning();
+
+    if (plan.planStartedDaysAgo != null && plan.planDurationDays != null) {
+      const targetStartDate = new Date();
+      targetStartDate.setDate(targetStartDate.getDate() - plan.planStartedDaysAgo);
+      const targetCompletionDate = new Date(targetStartDate);
+      targetCompletionDate.setDate(targetCompletionDate.getDate() + plan.planDurationDays);
+      await db
+        .update(projects)
+        .set({ targetStartDate, targetCompletionDate, progressPct: plan.progressPct ?? 0 })
+        .where(eq(projects.id, project.id));
+    }
 
     const workflowStatus = plan.finalStatus === "REJECTED" ? "REJECTED" : plan.finalStatus.startsWith("PENDING") ? "PENDING" : "APPROVED";
     const currentStep = { PENDING_SECTION: 1, PENDING_DEPT: 2, PENDING_DIVISION: 3 }[plan.finalStatus as "PENDING_SECTION" | "PENDING_DEPT" | "PENDING_DIVISION"] ?? 3;

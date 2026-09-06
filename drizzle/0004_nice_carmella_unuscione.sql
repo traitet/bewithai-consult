@@ -1,0 +1,1 @@
+ALTER TABLE `projects` ADD `target_completion_date` integer;

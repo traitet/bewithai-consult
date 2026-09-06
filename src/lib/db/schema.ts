@@ -130,6 +130,7 @@ export const projects = sqliteTable(
     aiToolIds: text("ai_tool_ids").notNull().default(""), // comma-separated AiTool ids
     status: text("status").notNull().default("PENDING_APPROVAL"),
     targetStartDate: integer("target_start_date", { mode: "timestamp" }),
+    targetCompletionDate: integer("target_completion_date", { mode: "timestamp" }), // the delivery plan set alongside the approval target — used to flag delay
     progressPct: integer("progress_pct").notNull().default(0), // manual delivery progress, independent of approval-workflow status
     createdAt: createdAt(),
   },

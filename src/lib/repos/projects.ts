@@ -5,6 +5,44 @@ import type { Scope } from "@/lib/db/tenant-db";
 import { resolveApprovalChain } from "@/lib/repos/org-units";
 import { APPROVAL_CHAIN } from "@/lib/types";
 
+/** Default delivery window used to plan a project's completion date the moment it clears final approval. */
+export const DEFAULT_PROJECT_PLAN_DAYS = 90;
+/** Actual progress must trail the linear-expected progress by more than this many points to count as "delayed". */
+const DELAY_THRESHOLD_PCT = 10;
+
+export type DelayInfo = {
+  hasPlan: boolean;
+  isDelayed: boolean;
+  expectedProgressPct: number | null;
+  daysRemaining: number | null;
+};
+
+/**
+ * Compares actual delivery progress against the linear-expected progress
+ * between the plan's start and target-completion dates (the plan recorded
+ * when the project's reduction target was finalized). A project past its
+ * target date and not yet 100% is always delayed, regardless of margin.
+ */
+export function computeProjectDelay(input: {
+  targetStartDate: Date | null;
+  targetCompletionDate: Date | null;
+  progressPct: number;
+}): DelayInfo {
+  const { targetStartDate, targetCompletionDate, progressPct } = input;
+  if (!targetStartDate || !targetCompletionDate) {
+    return { hasPlan: false, isDelayed: false, expectedProgressPct: null, daysRemaining: null };
+  }
+  const now = Date.now();
+  const start = targetStartDate.getTime();
+  const end = targetCompletionDate.getTime();
+  const totalMs = Math.max(end - start, 1);
+  const elapsedMs = Math.min(Math.max(now - start, 0), totalMs);
+  const expectedProgressPct = Math.round((elapsedMs / totalMs) * 100);
+  const daysRemaining = Math.round((end - now) / 86_400_000);
+  const isDelayed = progressPct < 100 && (now > end || progressPct < expectedProgressPct - DELAY_THRESHOLD_PCT);
+  return { hasPlan: true, isDelayed, expectedProgressPct, daysRemaining };
+}
+
 /**
  * `companyId: null` means "every company" — only reachable for a
  * company-independent scope. `search`, if given, matches (case-insensitive,
@@ -21,6 +59,8 @@ export async function listProjects(scope: Scope, companyId: string | null, searc
       title: projects.title,
       status: projects.status,
       progressPct: projects.progressPct,
+      targetStartDate: projects.targetStartDate,
+      targetCompletionDate: projects.targetCompletionDate,
       createdAt: projects.createdAt,
       issueTitle: issues.title,
       orgUnitName: orgUnits.name,
@@ -55,7 +95,11 @@ export async function listProjects(scope: Scope, companyId: string | null, searc
     if (wfSteps[0]) targetByProjectId.set(wf.projectId, wfSteps[0].targetHoursPerWeek!);
   }
 
-  const withTarget = rows.map((r) => ({ ...r, targetHoursPerWeek: targetByProjectId.get(r.id) ?? null }));
+  const withTarget = rows.map((r) => ({
+    ...r,
+    targetHoursPerWeek: targetByProjectId.get(r.id) ?? null,
+    delay: computeProjectDelay(r),
+  }));
 
   if (!search?.trim()) return withTarget;
   const needle = search.trim().toLowerCase();
@@ -72,6 +116,13 @@ export async function updateProjectProgress(scope: Scope, projectId: string, pro
   if (!project) throw new Error("Project not found");
   const clamped = Math.max(0, Math.min(100, Math.round(progressPct)));
   await db.update(projects).set({ progressPct: clamped }).where(eq(projects.id, projectId));
+}
+
+/** Lets a manager/consultant re-plan the delivery target date after it was first set at final approval. */
+export async function updateProjectPlan(scope: Scope, projectId: string, targetCompletionDate: Date) {
+  const project = await getProject(scope, projectId);
+  if (!project) throw new Error("Project not found");
+  await db.update(projects).set({ targetCompletionDate }).where(eq(projects.id, projectId));
 }
 
 export async function getProject(scope: Scope, projectId: string) {
@@ -123,7 +174,9 @@ export async function getProjectDetail(scope: Scope, projectId: string) {
     consultantName = c?.name ?? null;
   }
 
-  return { project, issue, orgUnit, benefit: benefit ?? null, workflow: workflow ?? null, steps, consultantName };
+  const delay = computeProjectDelay(project);
+
+  return { project, issue, orgUnit, benefit: benefit ?? null, workflow: workflow ?? null, steps, consultantName, delay };
 }
 
 /**

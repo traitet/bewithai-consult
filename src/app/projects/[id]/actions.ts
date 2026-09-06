@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { approveStep, rejectStep } from "@/lib/repos/approvals";
-import { updateProjectProgress } from "@/lib/repos/projects";
+import { updateProjectProgress, updateProjectPlan } from "@/lib/repos/projects";
 
 export async function updateProgressAction(formData: FormData): Promise<void> {
   const session = await requireSession();
@@ -13,6 +13,17 @@ export async function updateProgressAction(formData: FormData): Promise<void> {
   const progressPct = Number(formData.get("progressPct") ?? 0);
 
   await updateProjectProgress(scope, projectId, progressPct);
+  revalidatePath(`/projects/${projectId}`);
+}
+
+export async function updatePlanAction(formData: FormData): Promise<void> {
+  const session = await requireSession();
+  const scope = scopeFromSession(session);
+  const projectId = String(formData.get("projectId") ?? "");
+  const targetCompletionDate = String(formData.get("targetCompletionDate") ?? "");
+
+  if (!targetCompletionDate) throw new Error("Pick a target completion date.");
+  await updateProjectPlan(scope, projectId, new Date(targetCompletionDate));
   revalidatePath(`/projects/${projectId}`);
 }
 

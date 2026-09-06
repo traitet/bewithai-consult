@@ -2,6 +2,7 @@ import { db } from "@/lib/db/client";
 import { approvalSteps, approvalWorkflows, projects } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import type { Scope } from "@/lib/db/tenant-db";
+import { DEFAULT_PROJECT_PLAN_DAYS } from "@/lib/repos/projects";
 
 async function loadStepContext(stepId: string) {
   const [step] = await db.select().from(approvalSteps).where(eq(approvalSteps.id, stepId));
@@ -52,7 +53,14 @@ export async function approveStep(
 
   if (isFinalStep) {
     await db.update(approvalWorkflows).set({ status: "APPROVED" }).where(eq(approvalWorkflows.id, workflow.id));
-    await db.update(projects).set({ status: "APPROVED" }).where(eq(projects.id, project.id));
+    // Establish the delivery plan right when the reduction target is finalized, so
+    // delay tracking has something to compare progress against from day one.
+    const targetStartDate = new Date();
+    const targetCompletionDate = new Date(targetStartDate.getTime() + DEFAULT_PROJECT_PLAN_DAYS * 86_400_000);
+    await db
+      .update(projects)
+      .set({ status: "APPROVED", targetStartDate, targetCompletionDate })
+      .where(eq(projects.id, project.id));
   } else {
     await db
       .update(approvalWorkflows)

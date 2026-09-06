@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { getSession } from "@/lib/auth";
@@ -83,35 +82,41 @@ export default async function BookingsPage(props: PageProps<"/bookings">) {
           </div>
 
           {selectedConsultant ? (
-            <div className="overflow-hidden rounded-2xl border border-border bg-surface p-4">
-              <div className="grid grid-cols-8 gap-1.5">
-                <div />
+            <div className="overflow-hidden rounded-2xl border border-border bg-surface">
+              {/* Header row: hour-label gutter + 7 day columns, built with flex so column widths are guaranteed to line up with the slot rows below (no reliance on CSS grid auto-flow). */}
+              <div className="flex border-b border-border bg-surface-alt/60">
+                <div className="w-14 flex-shrink-0" />
                 {week.map((day) => (
-                  <div key={day.label} className="text-center">
-                    <div className="text-[10.5px] font-semibold uppercase text-text-faint">{day.label.slice(0, 3)}</div>
-                    <div className="text-[12px] font-medium text-text">{formatDateTh(day.date)}</div>
+                  <div key={day.label} className="flex-1 border-l border-border-soft py-2.5 text-center first:border-l-0">
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-text-faint">{day.label.slice(0, 3)}</div>
+                    <div className="text-[13px] font-semibold text-text">{formatDateTh(day.date)}</div>
                   </div>
                 ))}
-                {HOUR_LABELS.map((hourLabel, rowIdx) => (
-                  <Fragment key={hourLabel}>
-                    <div className="pt-1 text-[10.5px] text-text-faint">{hourLabel}</div>
-                    {week.map((day) => {
-                      const slot = day.slots[rowIdx];
-                      const style =
-                        slot.status === "AVAILABLE"
-                          ? "border border-teal bg-teal/10 text-teal"
-                          : slot.status === "BOOKED"
-                            ? "bg-blue text-white"
-                            : "bg-surface-alt text-text-faint";
-                      return (
-                        <div key={`${day.label}-${hourLabel}`} className={`flex h-12 items-center justify-center rounded-md px-1 text-center text-[10px] font-medium ${style}`}>
+              </div>
+
+              {HOUR_LABELS.map((hourLabel, rowIdx) => (
+                <div key={hourLabel} className="flex border-b border-border-soft last:border-b-0">
+                  <div className="flex w-14 flex-shrink-0 items-start justify-end pr-2 pt-1.5 text-[10.5px] text-text-faint">
+                    {hourLabel}
+                  </div>
+                  {week.map((day) => {
+                    const slot = day.slots[rowIdx];
+                    const style =
+                      slot.status === "AVAILABLE"
+                        ? "bg-teal/5 text-teal hover:bg-teal/10"
+                        : slot.status === "BOOKED"
+                          ? "bg-blue text-white"
+                          : "bg-surface-alt text-text-faint";
+                    return (
+                      <div key={`${day.label}-${hourLabel}`} className="flex-1 border-l border-border-soft p-1 first:border-l-0">
+                        <div className={`flex h-10 items-center justify-center rounded-md text-center text-[10.5px] font-medium leading-tight ${style}`}>
                           {slot.status === "AVAILABLE" ? "ว่าง" : slot.label}
                         </div>
-                      );
-                    })}
-                  </Fragment>
-                ))}
-              </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           ) : (
             <div className="rounded-2xl border border-border bg-surface p-8 text-center text-text-faint">ยังไม่มี Consultant</div>

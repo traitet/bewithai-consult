@@ -82,7 +82,15 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
                   </div>
                 </td>
                 <td className="px-5 py-3.5">
-                  <Badge value={row.status} />
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <Badge value={row.status} />
+                    {row.delay.hasPlan && (
+                      <Badge
+                        value={row.delay.isDelayed ? "DELAYED" : "ON_TRACK"}
+                        label={row.delay.isDelayed ? "ล่าช้า" : "ตามแผน"}
+                      />
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

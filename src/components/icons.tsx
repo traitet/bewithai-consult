@@ -108,6 +108,15 @@ export function SettingsIcon({ className }: IconProps) {
   );
 }
 
+export function ApprovalsIcon({ className }: IconProps) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} {...strokeProps}>
+      <rect x="4" y="3" width="12" height="14" rx="1.5" />
+      <path d="M7 9.5 9 11.5 13.5 7" />
+    </svg>
+  );
+}
+
 export function SuccessStoryIcon({ className }: IconProps) {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" className={`${base} ${className ?? ""}`} {...strokeProps}>

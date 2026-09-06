@@ -6,7 +6,7 @@ import { scopeFromSession } from "@/lib/db/tenant-db";
 import { getProjectDetail } from "@/lib/repos/projects";
 import { getCaseStudyByProjectId } from "@/lib/repos/case-studies";
 import { Badge } from "@/components/ui/Badge";
-import { approveStepAction, rejectStepAction, updateProgressAction } from "./actions";
+import { approveStepAction, rejectStepAction, updateProgressAction, updatePlanAction } from "./actions";
 import { submitCaseStudyAction } from "@/app/success-stories/actions";
 import { ROLE_LABELS } from "@/lib/labels";
 import type { Role } from "@/lib/types";
@@ -21,7 +21,7 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
 
   const detail = await getProjectDetail(scope, id);
   if (!detail) notFound();
-  const { project, issue, orgUnit, benefit, steps } = detail;
+  const { project, issue, orgUnit, benefit, steps, delay } = detail;
   const existingCaseStudy = await getCaseStudyByProjectId(scope, project.id);
 
   return (
@@ -51,15 +51,32 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
           <section className="rounded-2xl border border-border bg-surface p-5">
             <div className="mb-3 flex items-center justify-between">
               <h2 className="font-heading text-[14px] font-semibold text-text">Delivery Progress</h2>
-              <span className="text-[12.5px] font-semibold text-text">{project.progressPct}%</span>
+              <div className="flex items-center gap-2">
+                {delay.hasPlan && (
+                  <Badge
+                    value={delay.isDelayed ? "DELAYED" : "ON_TRACK"}
+                    label={delay.isDelayed ? "ล่าช้ากว่าแผน" : "ตามแผน"}
+                  />
+                )}
+                <span className="text-[12.5px] font-semibold text-text">{project.progressPct}%</span>
+              </div>
             </div>
             <div className="mb-3 h-2.5 w-full overflow-hidden rounded-full bg-surface-alt">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-blue to-teal transition-all"
                 style={{ width: `${project.progressPct}%` }}
               />
+              {delay.hasPlan && delay.expectedProgressPct != null && (
+                <div className="relative -mt-2.5 h-2.5 w-full">
+                  <div
+                    className="absolute top-0 h-2.5 w-0.5 bg-text-faint/70"
+                    style={{ left: `${Math.min(100, delay.expectedProgressPct)}%` }}
+                    title={`ความคืบหน้าที่คาดไว้ตามแผน: ${delay.expectedProgressPct}%`}
+                  />
+                </div>
+              )}
             </div>
-            <form action={updateProgressAction} className="flex items-center gap-2">
+            <form action={updateProgressAction} className="mb-4 flex items-center gap-2">
               <input type="hidden" name="projectId" value={project.id} />
               <input
                 name="progressPct"
@@ -74,6 +91,41 @@ export default async function ProjectDetailPage(props: PageProps<"/projects/[id]
                 อัปเดตความคืบหน้า
               </button>
             </form>
+
+            {delay.hasPlan ? (
+              <div className="flex items-center justify-between rounded-lg bg-surface-alt px-3 py-2.5 text-[12px]">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-text-faint">
+                    แผนเริ่ม: <span className="text-text-dim">{project.targetStartDate ? new Date(project.targetStartDate).toLocaleDateString("th-TH") : "—"}</span>
+                    {"  ·  "}
+                    เป้าหมายส่งมอบ: <span className="text-text-dim">{project.targetCompletionDate ? new Date(project.targetCompletionDate).toLocaleDateString("th-TH") : "—"}</span>
+                  </span>
+                  <span className="text-text-faint">
+                    ความคืบหน้าที่คาดไว้วันนี้: <span className="text-text-dim">{delay.expectedProgressPct}%</span>
+                    {delay.daysRemaining != null && (
+                      <>
+                        {"  ·  "}
+                        {delay.daysRemaining >= 0 ? `เหลืออีก ${delay.daysRemaining} วัน` : `เลยกำหนด ${-delay.daysRemaining} วัน`}
+                      </>
+                    )}
+                  </span>
+                </div>
+                <form action={updatePlanAction} className="flex items-center gap-1.5">
+                  <input type="hidden" name="projectId" value={project.id} />
+                  <input
+                    name="targetCompletionDate"
+                    type="date"
+                    defaultValue={project.targetCompletionDate ? new Date(project.targetCompletionDate).toISOString().slice(0, 10) : ""}
+                    className="rounded-md border border-border bg-surface px-2 py-1 text-[11.5px] text-text"
+                  />
+                  <button type="submit" className="rounded-md border border-border px-2.5 py-1 text-[11px] font-semibold text-text-dim hover:border-blue hover:text-blue">
+                    ปรับแผน
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <p className="text-[11.5px] text-text-faint">ยังไม่มีแผนส่งมอบ — จะตั้งอัตโนมัติเมื่อได้รับการอนุมัติครบทุกขั้นตอน</p>
+            )}
           </section>
 
           {benefit && (

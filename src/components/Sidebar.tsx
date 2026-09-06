@@ -14,6 +14,7 @@ import {
   SettingsIcon,
   SuccessStoryIcon,
   TeamIcon,
+  ApprovalsIcon,
 } from "@/components/icons";
 import { Avatar } from "@/components/ui/Avatar";
 
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
   { href: "/dashboard", label: "แดชบอร์ด", Icon: DashboardIcon },
   { href: "/projects", label: "โปรเจกต์", Icon: ProjectsIcon },
   { href: "/issues", label: "ปัญหา (Issues)", Icon: IssuesIcon },
+  { href: "/approvals", label: "การอนุมัติ", Icon: ApprovalsIcon },
   { href: "/bookings", label: "นัดหมาย", Icon: BookingsIcon },
   { href: "/elearning", label: "E-Learning", Icon: ELearningIcon },
   { href: "/skills", label: "ทักษะ (Skills)", Icon: SkillsIcon },

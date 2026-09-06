@@ -60,27 +60,39 @@ export default async function PerformancePage(props: PageProps<"/performance">) 
               <th className="px-5 py-3 font-semibold">ปัญหารวม</th>
               <th className="px-5 py-3 font-semibold">Success Story รวม</th>
               <th className="px-5 py-3 font-semibold">Skill เฉลี่ย</th>
+              <th className="px-5 py-3 font-semibold">ชม.ที่ลดได้/ปี</th>
+              <th className="px-5 py-3 font-semibold">เป้าหมายรวม/ปี</th>
             </tr>
           </thead>
           <tbody>
-            {groups.map((g) => (
-              <tr key={g.key} className="border-b border-border-soft last:border-0">
-                <td className="px-5 py-3.5">
-                  <span className="font-medium text-text">{g.departmentName ?? g.divisionName ?? g.key}</span>
-                  {g.divisionName && g.departmentName && (
-                    <span className="ml-1.5 text-[11px] text-text-faint">({g.divisionName})</span>
-                  )}
-                </td>
-                <td className="px-5 py-3.5 text-text-dim">{g.employeeCount}</td>
-                <td className="px-5 py-3.5 text-text-dim">{g.totalProjects}</td>
-                <td className="px-5 py-3.5 text-text-dim">{g.totalIssues}</td>
-                <td className="px-5 py-3.5 text-text-dim">{g.totalCaseStudies}</td>
-                <td className="px-5 py-3.5 text-text-dim">{g.avgSkillLevel ? `L${g.avgSkillLevel}` : "—"}</td>
-              </tr>
-            ))}
+            {groups.map((g) => {
+              const attainmentPct = g.totalTargetHours ? Math.round((g.totalBenefitHoursPerYear / g.totalTargetHours) * 100) : 0;
+              return (
+                <tr key={g.key} className="border-b border-border-soft last:border-0">
+                  <td className="px-5 py-3.5">
+                    <span className="font-medium text-text">{g.departmentName ?? g.divisionName ?? g.key}</span>
+                    {g.divisionName && g.departmentName && (
+                      <span className="ml-1.5 text-[11px] text-text-faint">({g.divisionName})</span>
+                    )}
+                  </td>
+                  <td className="px-5 py-3.5 text-text-dim">{g.employeeCount}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{g.totalProjects}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{g.totalIssues}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{g.totalCaseStudies}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{g.avgSkillLevel ? `L${g.avgSkillLevel}` : "—"}</td>
+                  <td className="px-5 py-3.5 font-medium text-teal">{g.totalBenefitHoursPerYear.toLocaleString()}</td>
+                  <td className="px-5 py-3.5 text-text-dim">
+                    {g.totalTargetHours.toLocaleString()}
+                    <span className={`ml-1.5 text-[10.5px] font-semibold ${attainmentPct >= 100 ? "text-green" : "text-amber"}`}>
+                      ({attainmentPct}%)
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
             {groups.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-5 py-6 text-center text-text-faint">
+                <td colSpan={8} className="px-5 py-6 text-center text-text-faint">
                   ไม่มีข้อมูล
                 </td>
               </tr>
@@ -102,33 +114,47 @@ export default async function PerformancePage(props: PageProps<"/performance">) 
               <th className="px-5 py-3 font-semibold">ปัญหาที่แจ้ง</th>
               <th className="px-5 py-3 font-semibold">Skill สูงสุด</th>
               <th className="px-5 py-3 font-semibold">Success Story</th>
+              <th className="px-5 py-3 font-semibold">ชม.ที่ลดได้/ปี</th>
+              <th className="px-5 py-3 font-semibold">เป้าหมาย/ปี</th>
               <th className="px-5 py-3 font-semibold"></th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
-              <tr key={row.userId} className="border-b border-border-soft last:border-0">
-                <td className="px-5 py-3.5">
-                  <div className="flex items-center gap-2.5">
-                    <Avatar name={row.name} initials={userInitials(row.name)} avatarUrl={row.avatarUrl} size={26} />
-                    <span className="font-medium text-text">{row.name}</span>
-                  </div>
-                </td>
-                <td className="px-5 py-3.5 text-text-dim">{row.orgUnitName ?? "—"}</td>
-                <td className="px-5 py-3.5 text-text-dim">{row.projectCount}</td>
-                <td className="px-5 py-3.5 text-text-dim">{row.issueCount}</td>
-                <td className="px-5 py-3.5 text-text-dim">{row.overallSkillLevel ? `L${row.overallSkillLevel}` : "—"}</td>
-                <td className="px-5 py-3.5 text-text-dim">{row.caseStudyCount}</td>
-                <td className="px-5 py-3.5">
-                  <Link href={`/members/${row.userId}`} className="text-[11.5px] font-semibold text-blue">
-                    ดูรายละเอียด →
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            {rows.map((row) => {
+              const attainmentPct = row.annualTargetHours ? Math.round((row.benefitHoursPerYear / row.annualTargetHours) * 100) : 0;
+              return (
+                <tr key={row.userId} className="border-b border-border-soft last:border-0">
+                  <td className="px-5 py-3.5">
+                    <div className="flex items-center gap-2.5">
+                      <Avatar name={row.name} initials={userInitials(row.name)} avatarUrl={row.avatarUrl} size={26} />
+                      <span className="font-medium text-text">{row.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-5 py-3.5 text-text-dim">{row.orgUnitName ?? "—"}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{row.projectCount}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{row.issueCount}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{row.overallSkillLevel ? `L${row.overallSkillLevel}` : "—"}</td>
+                  <td className="px-5 py-3.5 text-text-dim">{row.caseStudyCount}</td>
+                  <td className="px-5 py-3.5 font-medium text-teal">{row.benefitHoursPerYear.toLocaleString()}</td>
+                  <td className="px-5 py-3.5">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-text-dim">{row.annualTargetHours.toLocaleString()}</span>
+                      <span className={`text-[10.5px] font-semibold ${attainmentPct >= 100 ? "text-green" : "text-amber"}`}>
+                        {attainmentPct}%
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-5 py-3.5">
+                    <Link href={`/members/${row.userId}`} className="text-[11.5px] font-semibold text-blue">
+                      ดูรายละเอียด →
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-5 py-8 text-center text-text-faint">
+                <td colSpan={9} className="px-5 py-8 text-center text-text-faint">
                   ไม่พบพนักงานที่ตรงกับตัวกรอง
                 </td>
               </tr>

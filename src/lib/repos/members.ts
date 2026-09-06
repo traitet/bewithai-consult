@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/client";
-import { users, orgUnits, companies, skillRecords, aiTools, issues, projects } from "@/lib/db/schema";
+import { users, orgUnits, companies, skillRecords, aiTools, issues, projects, benefitSummaries } from "@/lib/db/schema";
 import { eq, or } from "drizzle-orm";
 import type { Scope } from "@/lib/db/tenant-db";
 
@@ -33,12 +33,21 @@ export async function getMemberProfile(scope: Scope, userId: string) {
       ? await db.select({ id: projects.id, title: projects.title, status: projects.status }).from(projects).where(eq(projects.consultantId, userId))
       : [];
 
+  // Actual benefit hours/year credited to this person (issue-submitter attribution rule).
+  let benefitHoursPerYear = 0;
+  for (const p of projectsAsRequester) {
+    const [b] = await db.select().from(benefitSummaries).where(eq(benefitSummaries.projectId, p.id));
+    if (b) benefitHoursPerYear += Math.max(0, b.beforeHoursPerWeek - b.afterHoursPerWeek) * 52;
+  }
+
   return {
     user,
     orgUnit,
     company,
     skills,
     submittedIssues,
+    benefitHoursPerYear: Math.round(benefitHoursPerYear),
+    annualTargetHours: user.annualTargetHours,
     projects: [...projectsAsRequester, ...projectsAsConsultant].filter(
       (p, i, arr) => arr.findIndex((x) => x.id === p.id) === i
     ),

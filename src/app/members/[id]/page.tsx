@@ -18,7 +18,8 @@ export default async function MemberProfilePage(props: PageProps<"/members/[id]"
 
   const profile = await getMemberProfile(scope, id);
   if (!profile) notFound();
-  const { user, orgUnit, company, skills, submittedIssues, projects } = profile;
+  const { user, orgUnit, company, skills, submittedIssues, projects, benefitHoursPerYear, annualTargetHours } = profile;
+  const attainmentPct = annualTargetHours ? Math.round((benefitHoursPerYear / annualTargetHours) * 100) : 0;
 
   return (
     <AppShell title={user.name}>
@@ -36,6 +37,22 @@ export default async function MemberProfilePage(props: PageProps<"/members/[id]"
               <span>อีเมล: {user.email}</span>
             </div>
           </section>
+
+          {user.companyId && (
+            <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
+              <h2 className="mb-3 font-heading text-[13px] font-semibold text-text">ชั่วโมงที่ลดได้ / ปี</h2>
+              <p className="font-heading text-[22px] font-semibold text-teal">{benefitHoursPerYear.toLocaleString()} ชม.</p>
+              <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-alt">
+                <div
+                  className={`h-full rounded-full ${attainmentPct >= 100 ? "bg-green" : "bg-gradient-to-r from-blue to-teal"}`}
+                  style={{ width: `${Math.min(100, attainmentPct)}%` }}
+                />
+              </div>
+              <p className="mt-1.5 text-[11px] text-text-faint">
+                เป้าหมาย {annualTargetHours.toLocaleString()} ชม./ปี ({attainmentPct}%)
+              </p>
+            </section>
+          )}
 
           <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
             <h2 className="mb-3 font-heading text-[13px] font-semibold text-text">ทักษะ (Skills)</h2>

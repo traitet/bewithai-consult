@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/client";
-import { users, orgUnits, issues, projects, skillRecords, caseStudies } from "@/lib/db/schema";
+import { users, orgUnits, issues, projects, skillRecords, caseStudies, benefitSummaries } from "@/lib/db/schema";
 import { eq, isNotNull } from "drizzle-orm";
 import type { Scope } from "@/lib/db/tenant-db";
 
@@ -16,6 +16,10 @@ export type EmployeePerformanceRow = {
   issueCount: number;
   overallSkillLevel: number;
   caseStudyCount: number;
+  /** Actual hours saved/year, credited to whoever submitted the originating issue (client-confirmed attribution rule). */
+  benefitHoursPerYear: number;
+  /** Set by this person's Division Manager (default 300 = 15% of a 2,000 hr work year). */
+  annualTargetHours: number;
 };
 
 /** A given org unit plus every unit nested under it — used for the org-unit filter. */
@@ -90,6 +94,17 @@ export async function listEmployeePerformance(
   const caseStudyCountByUser = new Map<string, number>();
   for (const c of caseStudyRows) caseStudyCountByUser.set(c.submittedById, (caseStudyCountByUser.get(c.submittedById) ?? 0) + 1);
 
+  // Actual benefit hours/year, credited to the issue submitter (confirmed attribution rule).
+  const benefits = await db.select().from(benefitSummaries);
+  const benefitByProjectId = new Map(benefits.map((b) => [b.projectId, b]));
+  const benefitHoursByUser = new Map<string, number>();
+  for (const [projectId, ownerId] of issueOwnerByProject) {
+    const b = benefitByProjectId.get(projectId);
+    if (!b) continue;
+    const hoursPerYear = Math.max(0, b.beforeHoursPerWeek - b.afterHoursPerWeek) * 52;
+    benefitHoursByUser.set(ownerId, (benefitHoursByUser.get(ownerId) ?? 0) + hoursPerYear);
+  }
+
   let scoped = employees;
   if (opts.orgUnitId) {
     const allowed = await expandOrgUnitIds(allUnits, opts.orgUnitId);
@@ -116,6 +131,8 @@ export async function listEmployeePerformance(
         issueCount: issueCountByUser.get(e.id) ?? 0,
         overallSkillLevel: skillLevelByUser.get(e.id) ?? 0,
         caseStudyCount: caseStudyCountByUser.get(e.id) ?? 0,
+        benefitHoursPerYear: Math.round(benefitHoursByUser.get(e.id) ?? 0),
+        annualTargetHours: e.annualTargetHours,
       };
     })
     .sort((a, b) => b.projectCount - a.projectCount || a.name.localeCompare(b.name));
@@ -130,6 +147,8 @@ export type DeptGroup = {
   totalIssues: number;
   totalCaseStudies: number;
   avgSkillLevel: number;
+  totalBenefitHoursPerYear: number;
+  totalTargetHours: number;
 };
 
 /** Rolls the per-employee rows up into one summary row per Department (falls back to Division for anyone without a department, e.g. a Division Manager sitting directly under the Division). */
@@ -151,6 +170,8 @@ export function groupByDepartment(rows: EmployeePerformanceRow[]): DeptGroup[] {
       totalCaseStudies: members.reduce((s, m) => s + m.caseStudyCount, 0),
       avgSkillLevel:
         Math.round((members.reduce((s, m) => s + m.overallSkillLevel, 0) / members.length) * 10) / 10 || 0,
+      totalBenefitHoursPerYear: Math.round(members.reduce((s, m) => s + m.benefitHoursPerYear, 0)),
+      totalTargetHours: members.reduce((s, m) => s + m.annualTargetHours, 0),
     }))
     .sort((a, b) => b.totalProjects - a.totalProjects);
 }

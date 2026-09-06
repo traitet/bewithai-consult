@@ -1,82 +1,121 @@
+import { Fragment } from "react";
+import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { getSession } from "@/lib/auth";
 import { scopeFromSession } from "@/lib/db/tenant-db";
 import { effectiveViewingCompanyId } from "@/lib/company-context";
-import { listUpcomingBookings, listConsultants } from "@/lib/repos/bookings";
-import { Badge } from "@/components/ui/Badge";
-import { createBookingAction, cancelBookingAction } from "./actions";
+import { listConsultants, getConsultantWeekGrid } from "@/lib/repos/bookings";
+import { Avatar } from "@/components/ui/Avatar";
+import { userInitials } from "@/lib/repos/users";
+import { createBookingAction } from "./actions";
 
-function formatThaiDateTime(d: Date): string {
-  return new Date(d).toLocaleString("th-TH", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+const HOUR_LABELS = ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
+
+function formatDateTh(d: Date): string {
+  return d.toLocaleDateString("th-TH", { day: "numeric", month: "short" });
 }
 
-export default async function BookingsPage() {
+export default async function BookingsPage(props: PageProps<"/bookings">) {
+  const searchParams = await props.searchParams;
+  const weekOffset = typeof searchParams.week === "string" ? parseInt(searchParams.week, 10) || 0 : 0;
+
   const session = await getSession();
   if (!session) return null;
   const scope = scopeFromSession(session);
   const companyId = await effectiveViewingCompanyId(session);
-  const showingAllCompanies = companyId === null;
 
-  const [bookingRows, consultants] = await Promise.all([
-    listUpcomingBookings(scope, companyId),
-    listConsultants(),
-  ]);
+  const consultants = await listConsultants();
+  const selectedConsultantId =
+    typeof searchParams.consultantId === "string" ? searchParams.consultantId : consultants[0]?.id;
+  const selectedConsultant = consultants.find((c) => c.id === selectedConsultantId) ?? consultants[0];
+
+  const week = selectedConsultant ? await getConsultantWeekGrid(scope, selectedConsultant.id, weekOffset) : [];
+
+  const weekQuery = (offset: number) =>
+    `?consultantId=${selectedConsultantId}&week=${offset}`;
 
   return (
     <AppShell title="นัดหมาย (Bookings)">
       <p className="mb-4 text-[12.5px] text-text-faint">
         นัดปรึกษากับ Consultant ทั้ง 3 ท่าน ได้ในเวลา 08:00–22:00 น. ทุกวัน (จันทร์–อาทิตย์)
       </p>
+
       <div className="flex gap-6">
-        <div className="flex-1 overflow-hidden rounded-2xl border border-border bg-surface">
-          <table className="w-full text-left text-[12.5px]">
-            <thead>
-              <tr className="border-b border-border text-[11px] uppercase tracking-wide text-text-faint">
-                <th className="px-5 py-3 font-semibold">วันเวลา</th>
-                <th className="px-5 py-3 font-semibold">Consultant</th>
-                {showingAllCompanies && <th className="px-5 py-3 font-semibold">บริษัท</th>}
-                <th className="px-5 py-3 font-semibold">หัวข้อ</th>
-                <th className="px-5 py-3 font-semibold">สถานะ</th>
-                <th className="px-5 py-3 font-semibold"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookingRows.map((row) => (
-                <tr key={row.id} className="border-b border-border-soft last:border-0">
-                  <td className="px-5 py-3.5 text-text">{formatThaiDateTime(row.startAt)}</td>
-                  <td className="px-5 py-3.5 text-text-dim">{row.consultantName}</td>
-                  {showingAllCompanies && <td className="px-5 py-3.5 text-text-dim">{row.companyName}</td>}
-                  <td className="px-5 py-3.5 text-text-dim">{row.topic}</td>
-                  <td className="px-5 py-3.5">
-                    <Badge value={row.status} label={row.status === "CONFIRMED" ? "ยืนยันแล้ว" : "ยกเลิกแล้ว"} />
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {row.status === "CONFIRMED" && (
-                      <form action={cancelBookingAction}>
-                        <input type="hidden" name="bookingId" value={row.id} />
-                        <button type="submit" className="text-[11.5px] font-semibold text-red">
-                          ยกเลิก
-                        </button>
-                      </form>
-                    )}
-                  </td>
-                </tr>
+        <div className="flex-1">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {consultants.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`?consultantId=${c.id}&week=0`}
+                  className={`flex items-center gap-2 rounded-full border px-3 py-1.5 ${
+                    c.id === selectedConsultantId ? "border-blue bg-blue/10" : "border-border bg-surface"
+                  }`}
+                >
+                  <Avatar name={c.name} initials={userInitials(c.name)} avatarUrl={c.avatarUrl} size={22} />
+                  <span className={`text-[12.5px] font-medium ${c.id === selectedConsultantId ? "text-blue" : "text-text-dim"}`}>
+                    {c.name}
+                  </span>
+                </Link>
               ))}
-              {bookingRows.length === 0 && (
-                <tr>
-                  <td colSpan={showingAllCompanies ? 6 : 5} className="px-5 py-8 text-center text-text-faint">
-                    ยังไม่มีนัดหมาย
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 text-[11px] text-text-faint">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-sm border border-teal bg-teal/10" /> ว่าง
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-sm bg-blue" /> จองแล้ว
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-sm bg-surface-alt" /> ไม่ว่าง
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Link href={weekQuery(weekOffset - 1)} className="rounded border border-border px-2 py-1 text-[11px] text-text-dim">
+                  ←
+                </Link>
+                <Link href={weekQuery(weekOffset + 1)} className="rounded border border-border px-2 py-1 text-[11px] text-text-dim">
+                  →
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {selectedConsultant ? (
+            <div className="overflow-hidden rounded-2xl border border-border bg-surface p-4">
+              <div className="grid grid-cols-8 gap-1.5">
+                <div />
+                {week.map((day) => (
+                  <div key={day.label} className="text-center">
+                    <div className="text-[10.5px] font-semibold uppercase text-text-faint">{day.label.slice(0, 3)}</div>
+                    <div className="text-[12px] font-medium text-text">{formatDateTh(day.date)}</div>
+                  </div>
+                ))}
+                {HOUR_LABELS.map((hourLabel, rowIdx) => (
+                  <Fragment key={hourLabel}>
+                    <div className="pt-1 text-[10.5px] text-text-faint">{hourLabel}</div>
+                    {week.map((day) => {
+                      const slot = day.slots[rowIdx];
+                      const style =
+                        slot.status === "AVAILABLE"
+                          ? "border border-teal bg-teal/10 text-teal"
+                          : slot.status === "BOOKED"
+                            ? "bg-blue text-white"
+                            : "bg-surface-alt text-text-faint";
+                      return (
+                        <div key={`${day.label}-${hourLabel}`} className={`flex h-12 items-center justify-center rounded-md px-1 text-center text-[10px] font-medium ${style}`}>
+                          {slot.status === "AVAILABLE" ? "ว่าง" : slot.label}
+                        </div>
+                      );
+                    })}
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-border bg-surface p-8 text-center text-text-faint">ยังไม่มี Consultant</div>
+          )}
         </div>
 
         {companyId ? (
@@ -88,7 +127,7 @@ export default async function BookingsPage() {
             <input type="hidden" name="companyId" value={companyId} />
 
             <Field label="Consultant">
-              <select name="consultantId" required className="input">
+              <select name="consultantId" defaultValue={selectedConsultantId} required className="input">
                 {consultants.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
@@ -120,7 +159,7 @@ export default async function BookingsPage() {
         ) : (
           <div className="flex w-80 flex-shrink-0 flex-col gap-2 rounded-2xl border border-border bg-surface p-5 text-[12px] text-text-faint">
             <span className="font-heading text-[13px] font-semibold text-text">ทุกบริษัท</span>
-            กำลังแสดงนัดหมายของทุกบริษัท เลือกบริษัทจากด้านบนเพื่อสร้างนัดหมายใหม่
+            เลือกบริษัทจากด้านบนเพื่อสร้างนัดหมายใหม่
           </div>
         )}
       </div>

@@ -11,16 +11,7 @@ export default async function ProjectsPage() {
   if (!session) return null;
   const scope = scopeFromSession(session);
   const companyId = await effectiveViewingCompanyId(session);
-
-  if (!companyId) {
-    return (
-      <AppShell title="Projects">
-        <div className="rounded-2xl border border-border bg-surface p-8 text-center text-[13px] text-text-dim">
-          Pick a company from the switcher above to view its projects.
-        </div>
-      </AppShell>
-    );
-  }
+  const showingAllCompanies = companyId === null;
 
   const rows = await listProjects(scope, companyId);
 
@@ -31,6 +22,7 @@ export default async function ProjectsPage() {
           <thead>
             <tr className="border-b border-border text-[11px] uppercase tracking-wide text-text-faint">
               <th className="px-5 py-3 font-semibold">Project</th>
+              {showingAllCompanies && <th className="px-5 py-3 font-semibold">Company</th>}
               <th className="px-5 py-3 font-semibold">Department</th>
               <th className="px-5 py-3 font-semibold">Status</th>
             </tr>
@@ -44,6 +36,7 @@ export default async function ProjectsPage() {
                   </Link>
                   <div className="text-[11px] text-text-faint">from: {row.issueTitle}</div>
                 </td>
+                {showingAllCompanies && <td className="px-5 py-3.5 text-text-dim">{row.companyName}</td>}
                 <td className="px-5 py-3.5 text-text-dim">{row.orgUnitName}</td>
                 <td className="px-5 py-3.5">
                   <Badge value={row.status} />
@@ -52,7 +45,7 @@ export default async function ProjectsPage() {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={3} className="px-5 py-8 text-center text-text-faint">
+                <td colSpan={showingAllCompanies ? 4 : 3} className="px-5 py-8 text-center text-text-faint">
                   No projects yet — convert an issue into one from the Issues page.
                 </td>
               </tr>

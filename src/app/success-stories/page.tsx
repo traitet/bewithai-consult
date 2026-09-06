@@ -12,16 +12,6 @@ export default async function SuccessStoriesPage() {
   const scope = scopeFromSession(session);
   const companyId = await effectiveViewingCompanyId(session);
 
-  if (!companyId) {
-    return (
-      <AppShell title="Success Stories">
-        <div className="rounded-2xl border border-border bg-surface p-8 text-center text-[13px] text-text-dim">
-          Pick a company from the switcher above to browse its success stories.
-        </div>
-      </AppShell>
-    );
-  }
-
   const [stories, pending] = await Promise.all([
     listCaseStudies(scope, companyId),
     listPendingApprovalsFor(scope, companyId),

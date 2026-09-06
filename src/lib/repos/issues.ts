@@ -1,11 +1,16 @@
 import { db } from "@/lib/db/client";
-import { issues, orgUnits, users } from "@/lib/db/schema";
+import { issues, orgUnits, users, companies } from "@/lib/db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import type { Scope } from "@/lib/db/tenant-db";
 import type { IssuePriority } from "@/lib/types";
 
-/** companyId is required here even for consultants (they must pick a company to file/view issues against — there's no such thing as a cross-company issue). */
-export async function listIssues(scope: Scope, companyId: string) {
+/**
+ * `companyId: null` means "every company" — only reachable for a
+ * company-independent scope (consultant/superadmin, see
+ * isCompanyIndependentRole). A company user must always pass their own
+ * companyId; this throws otherwise, same as before.
+ */
+export async function listIssues(scope: Scope, companyId: string | null) {
   if (scope.companyId !== null && scope.companyId !== companyId) {
     throw new Error("Forbidden: not your company");
   }
@@ -18,11 +23,13 @@ export async function listIssues(scope: Scope, companyId: string) {
       createdAt: issues.createdAt,
       orgUnitName: orgUnits.name,
       createdByName: users.name,
+      companyName: companies.name,
     })
     .from(issues)
     .innerJoin(orgUnits, eq(issues.orgUnitId, orgUnits.id))
     .innerJoin(users, eq(issues.createdById, users.id))
-    .where(eq(issues.companyId, companyId))
+    .innerJoin(companies, eq(issues.companyId, companies.id))
+    .where(companyId ? eq(issues.companyId, companyId) : undefined)
     .orderBy(desc(issues.createdAt));
 }
 

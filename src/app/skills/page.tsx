@@ -4,9 +4,12 @@ import { scopeFromSession } from "@/lib/db/tenant-db";
 import { effectiveViewingCompanyId } from "@/lib/company-context";
 import { listSkillDirectory } from "@/lib/repos/skills";
 import { listAiTools } from "@/lib/repos/consultants";
+import { listOrgUnits } from "@/lib/repos/org-units";
+import { OrgUnitFilter } from "@/components/ui/OrgUnitFilter";
 import { setMySkillLevelAction } from "./actions";
 
 const LEVEL_LABELS = ["", "Beginner", "Intermediate", "Advanced", "Expert"];
+const LEVEL_ORDER = ["DIVISION", "DEPARTMENT", "SECTION"];
 
 function LevelDots({ level }: { level: number }) {
   return (
@@ -21,35 +24,41 @@ function LevelDots({ level }: { level: number }) {
   );
 }
 
-export default async function SkillsPage() {
+export default async function SkillsPage(props: PageProps<"/skills">) {
+  const searchParams = await props.searchParams;
+  const orgUnitId = typeof searchParams.orgUnitId === "string" ? searchParams.orgUnitId : null;
+
   const session = await getSession();
   if (!session) return null;
   const scope = scopeFromSession(session);
   const companyId = await effectiveViewingCompanyId(session);
+  const showingAllCompanies = companyId === null;
 
-  if (!companyId) {
-    return (
-      <AppShell title="Skill Directory">
-        <div className="rounded-2xl border border-border bg-surface p-8 text-center text-[13px] text-text-dim">
-          Pick a company from the switcher above to view its skill directory.
-        </div>
-      </AppShell>
-    );
-  }
-
-  const [directory, tools] = await Promise.all([listSkillDirectory(scope, companyId), listAiTools()]);
+  const [directory, tools, orgUnitRows] = await Promise.all([
+    listSkillDirectory(scope, companyId, orgUnitId),
+    listAiTools(),
+    companyId ? listOrgUnits(scope, companyId) : Promise.resolve([]),
+  ]);
   const myRow = directory.find((r) => r.userId === session.userId);
+  const sortedOrgUnits = [...orgUnitRows].sort((a, b) => LEVEL_ORDER.indexOf(a.level) - LEVEL_ORDER.indexOf(b.level));
 
   return (
     <AppShell title="Skill Directory">
-      <div className="mb-5 flex items-center gap-6 rounded-2xl border border-border bg-surface p-4">
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-text-faint">Levels</span>
-        {LEVEL_LABELS.slice(1).map((label, i) => (
-          <div key={label} className="flex items-center gap-1.5">
-            <LevelDots level={i + 1} />
-            <span className="text-[11px] text-text-faint">{label}</span>
+      <div className="mb-5 flex items-center justify-between gap-6 rounded-2xl border border-border bg-surface p-4">
+        <div className="flex items-center gap-6">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-text-faint">Levels</span>
+          {LEVEL_LABELS.slice(1).map((label, i) => (
+            <div key={label} className="flex items-center gap-1.5">
+              <LevelDots level={i + 1} />
+              <span className="text-[11px] text-text-faint">{label}</span>
+            </div>
+          ))}
+        </div>
+        {companyId && (
+          <div className="w-72 flex-shrink-0">
+            <OrgUnitFilter orgUnits={sortedOrgUnits} selectedOrgUnitId={orgUnitId} />
           </div>
-        ))}
+        )}
       </div>
 
       {session.companyId && (
@@ -84,6 +93,8 @@ export default async function SkillsPage() {
           <thead>
             <tr className="border-b border-border text-[11px] uppercase tracking-wide text-text-faint">
               <th className="px-5 py-3 font-semibold">Name</th>
+              {showingAllCompanies && <th className="px-5 py-3 font-semibold">Company</th>}
+              <th className="px-5 py-3 font-semibold">Department / Section</th>
               <th className="px-5 py-3 font-semibold">Role</th>
               {tools.map((tool) => (
                 <th key={tool.id} className="px-5 py-3 font-semibold">
@@ -97,6 +108,8 @@ export default async function SkillsPage() {
             {directory.map((row) => (
               <tr key={row.userId} className="border-b border-border-soft last:border-0">
                 <td className="px-5 py-3.5 font-medium text-text">{row.name}</td>
+                {showingAllCompanies && <td className="px-5 py-3.5 text-text-dim">{row.companyName}</td>}
+                <td className="px-5 py-3.5 text-text-dim">{row.orgUnitName ?? "—"}</td>
                 <td className="px-5 py-3.5 text-text-dim">{row.role.replace(/_/g, " ")}</td>
                 {tools.map((tool) => (
                   <td key={tool.id} className="px-5 py-3.5">
@@ -110,8 +123,8 @@ export default async function SkillsPage() {
             ))}
             {directory.length === 0 && (
               <tr>
-                <td colSpan={3 + tools.length} className="px-5 py-8 text-center text-text-faint">
-                  No employees found for this company.
+                <td colSpan={(showingAllCompanies ? 5 : 4) + tools.length} className="px-5 py-8 text-center text-text-faint">
+                  No employees match this filter.
                 </td>
               </tr>
             )}

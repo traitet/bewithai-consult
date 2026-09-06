@@ -92,8 +92,8 @@ function assertCanDecide(scope: Scope, row: typeof caseStudies.$inferSelect) {
   }
 }
 
-/** Published stories only — the company-wide browse list. */
-export async function listCaseStudies(scope: Scope, companyId: string) {
+/** Published stories only — the company-wide browse list. `companyId: null` means "every company" (company-independent scope only). */
+export async function listCaseStudies(scope: Scope, companyId: string | null) {
   if (scope.companyId !== null && scope.companyId !== companyId) {
     throw new Error("Forbidden: not your company");
   }
@@ -108,11 +108,16 @@ export async function listCaseStudies(scope: Scope, companyId: string) {
       projectTitle: projects.title,
       publishedByName: users.name,
       publishedByEmail: users.email,
+      companyId: caseStudies.companyId,
     })
     .from(caseStudies)
     .innerJoin(projects, eq(caseStudies.projectId, projects.id))
     .innerJoin(users, eq(caseStudies.submittedById, users.id))
-    .where(and(eq(caseStudies.companyId, companyId), eq(caseStudies.status, "PUBLISHED")))
+    .where(
+      companyId
+        ? and(eq(caseStudies.companyId, companyId), eq(caseStudies.status, "PUBLISHED"))
+        : eq(caseStudies.status, "PUBLISHED")
+    )
     .orderBy(desc(caseStudies.submittedAt));
 
   const withStats = await Promise.all(
@@ -124,8 +129,8 @@ export async function listCaseStudies(scope: Scope, companyId: string) {
   return withStats;
 }
 
-/** Stories awaiting this user's decision (as their assigned approver, or any pending story for a consultant). */
-export async function listPendingApprovalsFor(scope: Scope, companyId: string) {
+/** Stories awaiting this user's decision (as their assigned approver, or any pending story for a consultant). `companyId: null` means "every company" (company-independent scope only). */
+export async function listPendingApprovalsFor(scope: Scope, companyId: string | null) {
   if (scope.companyId !== null && scope.companyId !== companyId) {
     throw new Error("Forbidden: not your company");
   }
@@ -139,7 +144,11 @@ export async function listPendingApprovalsFor(scope: Scope, companyId: string) {
     })
     .from(caseStudies)
     .innerJoin(users, eq(caseStudies.submittedById, users.id))
-    .where(and(eq(caseStudies.companyId, companyId), eq(caseStudies.status, "PENDING_APPROVAL")));
+    .where(
+      companyId
+        ? and(eq(caseStudies.companyId, companyId), eq(caseStudies.status, "PENDING_APPROVAL"))
+        : eq(caseStudies.status, "PENDING_APPROVAL")
+    );
 
   if (scope.companyId === null) return rows; // consultants see every pending story
   return rows.filter((r) => r.approverUserId === scope.userId);

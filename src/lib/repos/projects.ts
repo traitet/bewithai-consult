@@ -1,11 +1,12 @@
 import { db } from "@/lib/db/client";
-import { projects, issues, orgUnits, approvalWorkflows, approvalSteps, benefitSummaries, users } from "@/lib/db/schema";
+import { projects, issues, orgUnits, approvalWorkflows, approvalSteps, benefitSummaries, users, companies } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import type { Scope } from "@/lib/db/tenant-db";
 import { resolveApprovalChain } from "@/lib/repos/org-units";
 import { APPROVAL_CHAIN } from "@/lib/types";
 
-export async function listProjects(scope: Scope, companyId: string) {
+/** `companyId: null` means "every company" — only reachable for a company-independent scope. */
+export async function listProjects(scope: Scope, companyId: string | null) {
   if (scope.companyId !== null && scope.companyId !== companyId) {
     throw new Error("Forbidden: not your company");
   }
@@ -17,11 +18,13 @@ export async function listProjects(scope: Scope, companyId: string) {
       createdAt: projects.createdAt,
       issueTitle: issues.title,
       orgUnitName: orgUnits.name,
+      companyName: companies.name,
     })
     .from(projects)
     .innerJoin(issues, eq(projects.issueId, issues.id))
     .innerJoin(orgUnits, eq(projects.orgUnitId, orgUnits.id))
-    .where(eq(projects.companyId, companyId))
+    .innerJoin(companies, eq(projects.companyId, companies.id))
+    .where(companyId ? eq(projects.companyId, companyId) : undefined)
     .orderBy(desc(projects.createdAt));
 }
 

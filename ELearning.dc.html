@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+:root{
+  --bg:#0a0f1a; --sidebar:#0b1220; --surface:#121a2b; --surface-alt:#182238;
+  --border:#1e2a42; --border-soft:#182238;
+  --text:#eef2f8; --text-dim:#93a1bd; --text-faint:#5c6b8a;
+  --blue:#4f8dff; --teal:#2dd4c4; --amber:#f0b054; --green:#34d399; --red:#f2665a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;}
+a{color:var(--teal);text-decoration:none;}
+a:hover{color:var(--blue);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</helmet>
+
+<div style="width:1440px;height:960px;background:var(--bg);display:flex;overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <div style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;">
+    <div style="padding:24px 20px 20px 20px;display:flex;align-items:center;gap:10px;">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <defs><linearGradient id="lg7" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#2dd4c4"/></linearGradient></defs>
+        <path d="M7 19 13 6 19 19" stroke="url(#lg7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="13" cy="6" r="2.4" fill="url(#lg7)"/><circle cx="7" cy="19" r="2.4" fill="url(#lg7)"/><circle cx="19" cy="19" r="2.4" fill="url(#lg7)"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;color:var(--text);letter-spacing:-0.02em;">bewithai</span>
+        <span style="font-size:10.5px;color:var(--text-faint);letter-spacing:.04em;text-transform:uppercase;">AI Consulting Ops</span>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:12px;display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.2"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 2.5 6.5 10 10.5l7.5-4Z"/><path d="M2.5 10.5 10 14.5l7.5-4"/><path d="M2.5 14.5 10 18.5l7.5-4"/></svg>
+        <span>Projects</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V3"/><path d="M4 3.5c1.4-.9 2.8-.9 4.2 0 1.4.9 2.8.9 4.2 0 1.4-.9 2.8-.9 4.2 0v7c-1.4-.9-2.8-.9-4.2 0-1.4.9-2.8.9-4.2 0-1.4-.9-2.8-.9-4.2 0"/></svg>
+        <span>Issues</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
+        <span>Bookings</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));color:var(--text);font-size:13.5px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5 10 4l7.5 3.5L10 11z"/><path d="M5.5 9v3.5c0 1 2 2 4.5 2s4.5-1 4.5-2V9"/></svg>
+        <span>E-Learning</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="5.5"/><path d="M7 12.5 5.8 18l4.2-2.3L14.2 18 13 12.5"/></svg>
+        <span>Skills</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V3M3 17h14"/><rect x="5.5" y="11" width="2.4" height="4"/><rect x="9.3" y="8" width="2.4" height="7"/><rect x="13.1" y="6" width="2.4" height="9"/></svg>
+        <span>Reports</span>
+      </div>
+      <div style="height:1px;background:var(--border-soft);margin:8px 4px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M2.5 10h2M15.5 10h2M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4"/></svg>
+        <span>Settings</span>
+      </div>
+    </div>
+
+    <div style="padding:16px;border-top:1px solid var(--border-soft);display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--text-dim);">KP</div>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-size:12.5px;color:var(--text);font-weight:600;">Kanya Phongsathorn</span>
+        <span style="font-size:11px;color:var(--text-faint);">Finance · Acme Mfg</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+
+    <div style="height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--border);">
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;color:var(--text);">E-Learning</span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;opacity:.75;" title="Scoped to your company">
+          <span style="font-size:12.5px;color:var(--text-dim);font-weight:600;">Acme Manufacturing</span>
+          <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7.5 9V7a2.5 2.5 0 0 1 5 0v2"/></svg>
+        </div>
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--text-dim);">KP</div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:24px 28px;display:flex;flex-direction:column;gap:18px;overflow:auto;">
+
+      <!-- KPI ROW -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Courses Completed</span>
+          <span style="font-family:'Space Grotesk';font-size:24px;font-weight:600;color:var(--text);">186<span style="font-size:13px;color:var(--text-faint);font-weight:500;"> / 240</span></span>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Completion Rate</span>
+          <span style="font-family:'Space Grotesk';font-size:24px;font-weight:600;color:var(--text);">77%</span>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Avg. Score</span>
+          <span style="font-family:'Space Grotesk';font-size:24px;font-weight:600;color:var(--text);">88%</span>
+        </div>
+        <div style="background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));border:1px solid rgba(45,212,196,.35);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Skill Level-ups (Q3)</span>
+          <span style="font-family:'Space Grotesk';font-size:24px;font-weight:600;color:var(--text);">34</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;flex:1;min-height:0;">
+
+        <!-- LEFT: CATALOG -->
+        <div style="flex:1.7;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="background:var(--surface-alt);border:1px solid var(--teal);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--teal);">All</div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-dim);">Claude Cowork</div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-dim);">Claude Code</div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-dim);">ChatGPT</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(79,141,255,.14);padding:3px 8px;border-radius:6px;">Claude Code</span><span style="font-size:10.5px;color:var(--text-faint);">Target L2</span></div>
+              <span style="font-size:13px;font-weight:600;color:var(--text);">Claude Code Fundamentals</span>
+              <span style="font-size:11px;color:var(--text-faint);">2.5 hrs · 6 lessons</span>
+              <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--green);"></div></div>
+              <button style="background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.35);border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:var(--green);">✓ Completed</button>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(45,212,196,.14);padding:3px 8px;border-radius:6px;">Claude Cowork</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
+              <span style="font-size:13px;font-weight:600;color:var(--text);">Advanced Prompt Design</span>
+              <span style="font-size:11px;color:var(--text-faint);">3.0 hrs · 8 lessons</span>
+              <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:60%;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));"></div></div>
+              <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:#061018;">Continue</button>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--amber);background:rgba(240,176,84,.14);padding:3px 8px;border-radius:6px;">ChatGPT</span><span style="font-size:10.5px;color:var(--text-faint);">Target L2</span></div>
+              <span style="font-size:13px;font-weight:600;color:var(--text);">ChatGPT for Business Analysis</span>
+              <span style="font-size:11px;color:var(--text-faint);">2.0 hrs · 5 lessons</span>
+              <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--green);"></div></div>
+              <button style="background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.35);border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:var(--green);">✓ Completed</button>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--teal);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(79,141,255,.14);padding:3px 8px;border-radius:6px;">Claude Code</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
+              <span style="font-size:13px;font-weight:600;color:var(--text);">Automating Workflows with Claude Code</span>
+              <span style="font-size:11px;color:var(--text-faint);">4.0 hrs · 10 lessons</span>
+              <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:30%;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));"></div></div>
+              <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:#061018;">Continue</button>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(45,212,196,.14);padding:3px 8px;border-radius:6px;">Claude Cowork</span><span style="font-size:10.5px;color:var(--text-faint);">Target L1</span></div>
+              <span style="font-size:13px;font-weight:600;color:var(--text);">Claude Cowork for Team Collaboration</span>
+              <span style="font-size:11px;color:var(--text-faint);">1.5 hrs · 4 lessons</span>
+              <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--teal);"></div></div>
+              <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:var(--text-dim);">Enroll</button>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:10.5px;font-weight:600;color:var(--amber);background:rgba(240,176,84,.14);padding:3px 8px;border-radius:6px;">ChatGPT</span><span style="font-size:10.5px;color:var(--text-faint);">Target L3</span></div>
+              <span style="font-size:13px;font-weight:600;color:var(--text);">Data Analysis with ChatGPT</span>
+              <span style="font-size:11px;color:var(--text-faint);">2.5 hrs · 6 lessons</span>
+              <div style="height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--teal);"></div></div>
+              <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:8px;font-size:11.5px;font-weight:600;color:var(--text-dim);">Enroll</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT: LEARNING PATH -->
+        <div style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px;">
+            <span style="font-size:13px;font-weight:600;color:var(--text);">My Learning Path</span>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:34px;height:34px;border-radius:50%;background:var(--teal);color:#061018;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">L2</div><span style="font-size:10px;color:var(--text-faint);">Current</span></div>
+              <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--teal),var(--border));"></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:34px;height:34px;border-radius:50%;background:var(--surface-alt);border:1px solid var(--border);color:var(--text-faint);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">L3</div><span style="font-size:10px;color:var(--text-faint);">Next</span></div>
+            </div>
+            <span style="font-size:11.5px;color:var(--text-dim);">Claude Code proficiency</span>
+            <div style="background:rgba(45,212,196,.10);border:1px solid rgba(45,212,196,.3);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:11.5px;color:var(--text-dim);line-height:1.5;">Completing <b style="color:var(--text);">Automating Workflows with Claude Code</b> raises your Claude Code level <b style="color:var(--teal);">L2 → L3</b>.</span>
+              <a href="#" style="font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">View in Skill Matrix <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l6 5-6 5"/></svg></a>
+            </div>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;">
+            <span style="font-size:12px;color:var(--text-dim);font-weight:600;">How it works</span>
+            <span style="font-size:11.5px;color:var(--text-faint);line-height:1.6;">Course completions feed directly into your Skill Matrix record and count toward company-wide AI-adoption KPIs.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT COMPLETIONS -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px 10px 20px;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);">Recent Completions</span>
+          <span style="font-size:11px;color:var(--text-faint);">Scoped to Acme Manufacturing — your company only</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1.6fr 90px 90px 1.2fr;padding:8px 20px;border-bottom:1px solid var(--border);">
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">User</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Department</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Course</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Score</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Date</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Skill Updated</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1.6fr 90px 90px 1.2fr;padding:11px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <span style="font-size:12px;color:var(--text);font-weight:500;">Kanya P.</span><span style="font-size:12px;color:var(--text-dim);">Finance</span><span style="font-size:12px;color:var(--text-dim);">Claude Code Fundamentals</span><span style="font-size:12px;color:var(--text);">92%</span><span style="font-size:12px;color:var(--text-dim);">Aug 20</span><span style="font-size:11.5px;color:var(--teal);font-weight:600;">Claude Code L1→L2</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1.6fr 90px 90px 1.2fr;padding:11px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <span style="font-size:12px;color:var(--text);font-weight:500;">Anucha S.</span><span style="font-size:12px;color:var(--text-dim);">Sales Ops</span><span style="font-size:12px;color:var(--text-dim);">ChatGPT for Business Analysis</span><span style="font-size:12px;color:var(--text);">85%</span><span style="font-size:12px;color:var(--text-dim);">Aug 18</span><span style="font-size:11.5px;color:var(--teal);font-weight:600;">ChatGPT L1→L2</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1.6fr 90px 90px 1.2fr;padding:11px 20px;align-items:center;">
+          <span style="font-size:12px;color:var(--text);font-weight:500;">Kanya P.</span><span style="font-size:12px;color:var(--text-dim);">Finance</span><span style="font-size:12px;color:var(--text-dim);">ChatGPT for Business Analysis</span><span style="font-size:12px;color:var(--text);">88%</span><span style="font-size:12px;color:var(--text-dim);">Aug 5</span><span style="font-size:11.5px;color:var(--teal);font-weight:600;">ChatGPT L2→L3</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

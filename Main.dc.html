@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+:root{
+  --bg:#0a0f1a; --sidebar:#0b1220; --surface:#121a2b; --surface-alt:#182238;
+  --border:#1e2a42; --border-soft:#182238;
+  --text:#eef2f8; --text-dim:#93a1bd; --text-faint:#5c6b8a;
+  --blue:#4f8dff; --teal:#2dd4c4; --amber:#f0b054; --green:#34d399; --red:#f2665a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;}
+a{color:var(--teal);text-decoration:none;}
+a:hover{color:var(--blue);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</helmet>
+
+<div style="width:1440px;height:960px;background:var(--bg);display:flex;overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <div style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;">
+    <div style="padding:24px 20px 20px 20px;display:flex;align-items:center;gap:10px;">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <defs><linearGradient id="lg1" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#2dd4c4"/></linearGradient></defs>
+        <path d="M7 19 13 6 19 19" stroke="url(#lg1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="13" cy="6" r="2.4" fill="url(#lg1)"/><circle cx="7" cy="19" r="2.4" fill="url(#lg1)"/><circle cx="19" cy="19" r="2.4" fill="url(#lg1)"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;color:var(--text);letter-spacing:-0.02em;">bewithai</span>
+        <span style="font-size:10.5px;color:var(--text-faint);letter-spacing:.04em;text-transform:uppercase;">AI Consulting Ops</span>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:12px;display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));color:var(--text);font-size:13.5px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.2"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 2.5 6.5 10 10.5l7.5-4Z"/><path d="M2.5 10.5 10 14.5l7.5-4"/><path d="M2.5 14.5 10 18.5l7.5-4"/></svg>
+        <span>Projects</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V3"/><path d="M4 3.5c1.4-.9 2.8-.9 4.2 0 1.4.9 2.8.9 4.2 0 1.4-.9 2.8-.9 4.2 0v7c-1.4-.9-2.8-.9-4.2 0-1.4.9-2.8.9-4.2 0-1.4-.9-2.8-.9-4.2 0"/></svg>
+        <span>Issues</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
+        <span>Bookings</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5 10 4l7.5 3.5L10 11z"/><path d="M5.5 9v3.5c0 1 2 2 4.5 2s4.5-1 4.5-2V9"/></svg>
+        <span>E-Learning</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="5.5"/><path d="M7 12.5 5.8 18l4.2-2.3L14.2 18 13 12.5"/></svg>
+        <span>Skills</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V3M3 17h14"/><rect x="5.5" y="11" width="2.4" height="4"/><rect x="9.3" y="8" width="2.4" height="7"/><rect x="13.1" y="6" width="2.4" height="9"/></svg>
+        <span>Reports</span>
+      </div>
+      <div style="height:1px;background:var(--border-soft);margin:8px 4px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M2.5 10h2M15.5 10h2M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4"/></svg>
+        <span>Settings</span>
+      </div>
+    </div>
+
+    <div style="padding:16px;border-top:1px solid var(--border-soft);display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-size:12.5px;color:var(--text);font-weight:600;">Traitet</span>
+        <span style="font-size:11px;color:var(--text-faint);">Lead AI Consultant</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+
+    <div style="height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--border);">
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;color:var(--text);">Dashboard</span>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 14px;width:230px;">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.6"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M17 17l-4-4" stroke-linecap="round"/></svg>
+          <span style="font-size:12.5px;color:var(--text-faint);">Search projects, issues, people…</span>
+        </div>
+
+        <!-- company context switcher (consultant view: cross-company access) -->
+        <div style="position:relative;">
+          <div style="display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;cursor:pointer;">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="1.5"/><path d="M7 7h1M7 10.5h1M7 14h1M12 7h1M12 10.5h1M12 14h1"/></svg>
+            <span style="font-size:12.5px;color:var(--text);font-weight:600;">All Companies</span>
+            <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="2.2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          </div>
+          <div style="position:absolute;top:46px;right:0;width:250px;background:var(--surface-alt);border:1px solid var(--border);border-radius:10px;box-shadow:0 16px 36px rgba(0,0,0,.45);padding:8px;display:flex;flex-direction:column;gap:2px;z-index:10;">
+            <span style="font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;padding:6px 8px 4px 8px;">Consultant view — switch client</span>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 8px;border-radius:6px;background:rgba(45,212,196,.14);">
+              <span style="font-size:12.5px;color:var(--text);font-weight:600;">All Companies</span>
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-8"/></svg>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 8px;border-radius:6px;"><span style="font-size:12.5px;color:var(--text-dim);">Acme Manufacturing</span><span style="font-size:10.5px;color:var(--text-faint);">142 members</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 8px;border-radius:6px;"><span style="font-size:12.5px;color:var(--text-dim);">Siam Textile Group</span><span style="font-size:10.5px;color:var(--text-faint);">96 members</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 8px;border-radius:6px;"><span style="font-size:12.5px;color:var(--text-dim);">Blue Ocean Logistics</span><span style="font-size:10.5px;color:var(--text-faint);">58 members</span></div>
+          </div>
+        </div>
+
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#93a1bd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8a5 5 0 0 1 10 0v3.5l1.5 2.5h-13L5 11.5Z"/><path d="M8.3 16.5a1.7 1.7 0 0 0 3.4 0"/></svg>
+        <div style="display:flex;align-items:center;gap:9px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+          <div style="display:flex;flex-direction:column;">
+            <span style="font-size:12px;color:var(--text);font-weight:600;">Traitet</span>
+            <span style="font-size:10px;color:var(--teal);font-weight:600;">Consultant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:24px 28px;display:flex;flex-direction:column;gap:18px;overflow:auto;">
+
+      <!-- KPI ROW -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Open Issues</span>
+            <div style="width:26px;height:26px;border-radius:7px;background:rgba(79,141,255,.14);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#4f8dff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V3"/><path d="M4 3.5c1.4-.9 2.8-.9 4.2 0 1.4.9 2.8.9 4.2 0 1.4-.9 2.8-.9 4.2 0v7c-1.4-.9-2.8-.9-4.2 0-1.4.9-2.8.9-4.2 0-1.4-.9-2.8-.9-4.2 0"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:7px;">
+            <span style="font-family:'Space Grotesk';font-size:26px;font-weight:600;color:var(--text);">24</span>
+            <span style="font-size:11.5px;color:var(--green);font-weight:600;">↑ 3</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-faint);">vs. last month</span>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Active Projects</span>
+            <div style="width:26px;height:26px;border-radius:7px;background:rgba(45,212,196,.14);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 2.5 6.5 10 10.5l7.5-4Z"/><path d="M2.5 10.5 10 14.5l7.5-4"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:7px;">
+            <span style="font-family:'Space Grotesk';font-size:26px;font-weight:600;color:var(--text);">18</span>
+            <span style="font-size:11.5px;color:var(--text-faint);font-weight:600;">of 32</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-faint);">approved &amp; in progress</span>
+        </div>
+
+        <div style="background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));border:1px solid rgba(45,212,196,.35);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Benefit Hours / Year</span>
+            <div style="width:26px;height:26px;border-radius:7px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:7px;">
+            <span style="font-family:'Space Grotesk';font-size:26px;font-weight:600;color:var(--text);">12,480</span>
+            <span style="font-size:11.5px;color:var(--green);font-weight:600;">↑ 18%</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-faint);">saved across all projects</span>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Consultants</span>
+            <div style="width:26px;height:26px;border-radius:7px;background:rgba(240,176,84,.14);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#f0b054" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="6.5" r="2.7"/><path d="M2.8 16c.5-2.6 2.4-4 4.7-4s4.2 1.4 4.7 4"/><circle cx="14.2" cy="7.3" r="2.1"/><path d="M13 12.4c1.9.2 3.3 1.5 3.7 3.6"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:7px;">
+            <span style="font-family:'Space Grotesk';font-size:26px;font-weight:600;color:var(--text);">3</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-faint);">fully booked this week</span>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--text-dim);font-weight:500;">Skill Coverage</span>
+            <div style="width:26px;height:26px;border-radius:7px;background:rgba(52,211,153,.14);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6.5"/><circle cx="10" cy="10" r="2"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:7px;">
+            <span style="font-family:'Space Grotesk';font-size:26px;font-weight:600;color:var(--text);">78%</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-faint);">staff assessed on AI tools</span>
+        </div>
+      </div>
+
+      <!-- ROW 1: TREND + DONUT -->
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;">
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:13.5px;font-weight:600;color:var(--text);">Benefit Hours Trend</span>
+            <span style="font-size:11.5px;color:var(--text-faint);">Jan – Dec 2026</span>
+          </div>
+          <svg width="100%" height="150" viewBox="0 0 520 140" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2dd4c4" stop-opacity="0.28"/>
+                <stop offset="1" stop-color="#2dd4c4" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="35" x2="520" y2="35" stroke="#1e2a42" stroke-width="1"/>
+            <line x1="0" y1="70" x2="520" y2="70" stroke="#1e2a42" stroke-width="1"/>
+            <line x1="0" y1="105" x2="520" y2="105" stroke="#1e2a42" stroke-width="1"/>
+            <path d="M0,40 L47,42 L95,35 L142,30 L189,28 L236,22 L284,20 L331,15 L378,35 L425,18 L473,15 L520,12 L520,130 L0,130 Z" fill="url(#areaFill)"/>
+            <path d="M0,40 L47,42 L95,35 L142,30 L189,28 L236,22 L284,20 L331,15 L378,35 L425,18 L473,15 L520,12" fill="none" stroke="#2dd4c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="520" cy="12" r="3.5" fill="#2dd4c4"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;padding:0 2px;">
+            <span style="font-size:10.5px;color:var(--text-faint);">Jan</span><span style="font-size:10.5px;color:var(--text-faint);">Feb</span><span style="font-size:10.5px;color:var(--text-faint);">Mar</span><span style="font-size:10.5px;color:var(--text-faint);">Apr</span><span style="font-size:10.5px;color:var(--text-faint);">May</span><span style="font-size:10.5px;color:var(--text-faint);">Jun</span><span style="font-size:10.5px;color:var(--text-faint);">Jul</span><span style="font-size:10.5px;color:var(--text-faint);">Aug</span><span style="font-size:10.5px;color:var(--text-faint);">Sep</span><span style="font-size:10.5px;color:var(--text-faint);">Oct</span><span style="font-size:10.5px;color:var(--text-faint);">Nov</span><span style="font-size:10.5px;color:var(--text-faint);">Dec</span>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:16px;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);">Project Status Breakdown</span>
+          <div style="display:flex;align-items:center;gap:20px;">
+            <div style="position:relative;width:112px;height:112px;flex-shrink:0;">
+              <div style="width:112px;height:112px;border-radius:50%;background:conic-gradient(from -90deg, #f0b054 0% 18.75%, #4f8dff 18.75% 34.4%, #2dd4c4 34.4% 75%, #34d399 75% 100%);"></div>
+              <div style="position:absolute;inset:18px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <span style="font-family:'Space Grotesk';font-size:18px;font-weight:600;color:var(--text);">32</span>
+                <span style="font-size:9.5px;color:var(--text-faint);">Projects</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#f0b054;"></div><span style="font-size:12px;color:var(--text-dim);">Pending Approval</span><span style="font-size:12px;color:var(--text);font-weight:600;margin-left:auto;">6</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#4f8dff;"></div><span style="font-size:12px;color:var(--text-dim);">Approved</span><span style="font-size:12px;color:var(--text);font-weight:600;margin-left:auto;">5</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#2dd4c4;"></div><span style="font-size:12px;color:var(--text-dim);">In Progress</span><span style="font-size:12px;color:var(--text);font-weight:600;margin-left:auto;">13</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#34d399;"></div><span style="font-size:12px;color:var(--text-dim);">Completed</span><span style="font-size:12px;color:var(--text);font-weight:600;margin-left:auto;">8</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2: TOP SKILLS + ACTIVITY -->
+      <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:16px;flex:1;min-height:0;">
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:16px;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);">Top Skills &amp; AI Tools</span>
+          <div style="display:flex;flex-direction:column;gap:13px;">
+            <div style="display:flex;align-items:center;gap:12px;"><span style="width:118px;font-size:12px;color:var(--text-dim);">Claude Code</span><div style="flex:1;height:8px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:82%;height:100%;background:linear-gradient(90deg,#4f8dff,#2dd4c4);border-radius:4px;"></div></div><span style="width:32px;text-align:right;font-size:12px;color:var(--text);font-weight:600;">82%</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><span style="width:118px;font-size:12px;color:var(--text-dim);">Prompt Engineering</span><div style="flex:1;height:8px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:76%;height:100%;background:linear-gradient(90deg,#4f8dff,#2dd4c4);border-radius:4px;"></div></div><span style="width:32px;text-align:right;font-size:12px;color:var(--text);font-weight:600;">76%</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><span style="width:118px;font-size:12px;color:var(--text-dim);">ChatGPT</span><div style="flex:1;height:8px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:71%;height:100%;background:linear-gradient(90deg,#4f8dff,#2dd4c4);border-radius:4px;"></div></div><span style="width:32px;text-align:right;font-size:12px;color:var(--text);font-weight:600;">71%</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><span style="width:118px;font-size:12px;color:var(--text-dim);">Data Analysis</span><div style="flex:1;height:8px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:68%;height:100%;background:linear-gradient(90deg,#4f8dff,#2dd4c4);border-radius:4px;"></div></div><span style="width:32px;text-align:right;font-size:12px;color:var(--text);font-weight:600;">68%</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><span style="width:118px;font-size:12px;color:var(--text-dim);">Claude Cowork</span><div style="flex:1;height:8px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:64%;height:100%;background:linear-gradient(90deg,#4f8dff,#2dd4c4);border-radius:4px;"></div></div><span style="width:32px;text-align:right;font-size:12px;color:var(--text);font-weight:600;">64%</span></div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:6px;overflow:auto;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:8px;">Recent Activity</span>
+
+          <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border-soft);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--green);margin-top:5px;flex-shrink:0;"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12.5px;color:var(--text);">Division Manager approved <b>PRJ-014 — Customer Support Automation</b></span><span style="font-size:11px;color:var(--text-faint);">2 hours ago</span></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border-soft);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--blue);margin-top:5px;flex-shrink:0;"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12.5px;color:var(--text);">New issue submitted: <b>"Manual invoice reconciliation takes 6 hrs/week"</b> by Kanya P., Finance</span><span style="font-size:11px;color:var(--text-faint);">4 hours ago</span></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border-soft);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12.5px;color:var(--text);">Consultation booked with <b>Traitet</b> — Thu 10:00–11:00</span><span style="font-size:11px;color:var(--text-faint);">5 hours ago</span></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border-soft);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);margin-top:5px;flex-shrink:0;"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12.5px;color:var(--text);">Benefit summary submitted for <b>PRJ-009</b>, pending Section Manager review</span><span style="font-size:11px;color:var(--text-faint);">1 day ago</span></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border-soft);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--text-faint);margin-top:5px;flex-shrink:0;"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12.5px;color:var(--text);"><b>Somchai</b> marked unavailable Fri 13:00–15:00</span><span style="font-size:11px;color:var(--text-faint);">1 day ago</span></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:9px 0;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--green);margin-top:5px;flex-shrink:0;"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12.5px;color:var(--text);"><b>PRJ-011</b> marked Completed — 340 hrs/year saved</span><span style="font-size:11px;color:var(--text-faint);">2 days ago</span></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

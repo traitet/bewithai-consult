@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+:root{
+  --bg:#0a0f1a; --sidebar:#0b1220; --surface:#121a2b; --surface-alt:#182238;
+  --border:#1e2a42; --border-soft:#182238;
+  --text:#eef2f8; --text-dim:#93a1bd; --text-faint:#5c6b8a;
+  --blue:#4f8dff; --teal:#2dd4c4; --amber:#f0b054; --green:#34d399; --red:#f2665a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;}
+a{color:var(--teal);text-decoration:none;}
+a:hover{color:var(--blue);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</helmet>
+
+<div style="width:1440px;height:1100px;background:var(--bg);display:flex;overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <div style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;">
+    <div style="padding:24px 20px 20px 20px;display:flex;align-items:center;gap:10px;">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <defs><linearGradient id="lg4" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#2dd4c4"/></linearGradient></defs>
+        <path d="M7 19 13 6 19 19" stroke="url(#lg4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="13" cy="6" r="2.4" fill="url(#lg4)"/><circle cx="7" cy="19" r="2.4" fill="url(#lg4)"/><circle cx="19" cy="19" r="2.4" fill="url(#lg4)"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;color:var(--text);letter-spacing:-0.02em;">bewithai</span>
+        <span style="font-size:10.5px;color:var(--text-faint);letter-spacing:.04em;text-transform:uppercase;">AI Consulting Ops</span>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:12px;display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.2"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));color:var(--text);font-size:13.5px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 2.5 6.5 10 10.5l7.5-4Z"/><path d="M2.5 10.5 10 14.5l7.5-4"/><path d="M2.5 14.5 10 18.5l7.5-4"/></svg>
+        <span>Projects</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V3"/><path d="M4 3.5c1.4-.9 2.8-.9 4.2 0 1.4.9 2.8.9 4.2 0 1.4-.9 2.8-.9 4.2 0v7c-1.4-.9-2.8-.9-4.2 0-1.4.9-2.8.9-4.2 0-1.4-.9-2.8-.9-4.2 0"/></svg>
+        <span>Issues</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
+        <span>Bookings</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5 10 4l7.5 3.5L10 11z"/><path d="M5.5 9v3.5c0 1 2 2 4.5 2s4.5-1 4.5-2V9"/></svg>
+        <span>E-Learning</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="5.5"/><path d="M7 12.5 5.8 18l4.2-2.3L14.2 18 13 12.5"/></svg>
+        <span>Skills</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V3M3 17h14"/><rect x="5.5" y="11" width="2.4" height="4"/><rect x="9.3" y="8" width="2.4" height="7"/><rect x="13.1" y="6" width="2.4" height="9"/></svg>
+        <span>Reports</span>
+      </div>
+      <div style="height:1px;background:var(--border-soft);margin:8px 4px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M2.5 10h2M15.5 10h2M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4"/></svg>
+        <span>Settings</span>
+      </div>
+    </div>
+
+    <div style="padding:16px;border-top:1px solid var(--border-soft);display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">WS</div>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-size:12.5px;color:var(--text);font-weight:600;">Warit Suksawat</span>
+        <span style="font-size:11px;color:var(--text-faint);">Department Manager</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+
+    <div style="height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;color:var(--text-faint);">Projects</span>
+        <span style="font-size:13px;color:var(--text-faint);">/</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;color:var(--text);">PRJ-018 · Invoice Reconciliation Copilot</span>
+        <span style="display:inline-flex;justify-content:center;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(240,176,84,.15);color:var(--amber);border:1px solid rgba(240,176,84,.3);">Pending Approval</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;opacity:.75;" title="Scoped to your company">
+          <span style="font-size:12.5px;color:var(--text-dim);font-weight:600;">Acme Manufacturing</span>
+          <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7.5 9V7a2.5 2.5 0 0 1 5 0v2"/></svg>
+        </div>
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">WS</div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:24px 28px;display:flex;gap:20px;overflow:auto;">
+
+      <!-- LEFT COLUMN -->
+      <div style="flex:1.6;display:flex;flex-direction:column;gap:16px;">
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);">Project Information</span>
+          <p style="font-size:12.5px;color:var(--text-dim);line-height:1.6;">Use Claude Code to auto-extract invoice line items and reconcile against ERP records, replacing manual cross-checking by the finance team.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding-top:6px;">
+            <div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:11px;color:var(--text-faint);">Department</span><span style="font-size:12.5px;color:var(--text);font-weight:500;">Finance</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:11px;color:var(--text-faint);">Requester</span><span style="font-size:12.5px;color:var(--text);font-weight:500;">Kanya Phongsathorn</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:11px;color:var(--text-faint);">Consultant</span><span style="font-size:12.5px;color:var(--text);font-weight:500;">Saowalak</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:11px;color:var(--text-faint);">AI Tools</span><span style="font-size:12.5px;color:var(--text);font-weight:500;">Claude Code, ChatGPT</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:11px;color:var(--text-faint);">Proposed Start</span><span style="font-size:12.5px;color:var(--text);font-weight:500;">Sep 15, 2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:11px;color:var(--text-faint);">Linked Issue</span><a href="#" style="font-size:12.5px;font-weight:500;">ISS-241</a></div>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;">
+            <span style="font-size:11px;color:var(--text-faint);">Linked Issue</span>
+            <span style="font-size:12.5px;color:var(--text);">"Manual invoice reconciliation takes ~6 hrs/week" — Kanya P., Finance · <span style="color:var(--red);font-weight:600;">High priority</span></span>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:13.5px;font-weight:600;color:var(--text);">Consultation Schedule</span>
+            <button style="background:transparent;border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:11.5px;font-weight:600;color:var(--teal);">+ Schedule Session</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft);">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--green);"></div>
+              <span style="font-size:12.5px;color:var(--text);width:150px;">Aug 28, 09:00–10:00</span>
+              <span style="font-size:12.5px;color:var(--text-dim);flex:1;">Discovery session · Saowalak</span>
+              <span style="font-size:11px;color:var(--green);font-weight:600;">Completed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-soft);">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--green);"></div>
+              <span style="font-size:12.5px;color:var(--text);width:150px;">Sep 9, 10:00–11:00</span>
+              <span style="font-size:12.5px;color:var(--text-dim);flex:1;">Solution walkthrough · Saowalak</span>
+              <span style="font-size:11px;color:var(--green);font-weight:600;">Completed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 0;">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--blue);"></div>
+              <span style="font-size:12.5px;color:var(--text);width:150px;">Sep 18, 14:00–15:00</span>
+              <span style="font-size:12.5px;color:var(--text-dim);flex:1;">Approval readiness review · Saowalak</span>
+              <span style="font-size:11px;color:var(--blue);font-weight:600;">Upcoming</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:16px;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);">Benefit Summary</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+            <div style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:11px;color:var(--text-faint);">Before (manual)</span><span style="font-family:'Space Grotesk';font-size:19px;font-weight:600;color:var(--text);">11.0 hrs<span style="font-size:11px;color:var(--text-faint);font-weight:400;">/week</span></span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:11px;color:var(--text-faint);">After (with AI)</span><span style="font-family:'Space Grotesk';font-size:19px;font-weight:600;color:var(--text);">1.7 hrs<span style="font-size:11px;color:var(--text-faint);font-weight:400;">/week</span></span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;background:rgba(45,212,196,.10);border-radius:8px;padding:6px 10px;"><span style="font-size:11px;color:var(--teal);">Saved / Year</span><span style="font-family:'Space Grotesk';font-size:19px;font-weight:600;color:var(--teal);">484 hrs</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:11px;color:var(--text-faint);width:60px;">Before</span><div style="flex:1;height:10px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--text-faint);"></div></div></div>
+            <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:11px;color:var(--text-faint);width:60px;">After</span><div style="flex:1;height:10px;background:var(--surface-alt);border-radius:4px;overflow:hidden;"><div style="width:15.5%;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: APPROVAL WORKFLOW -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:18px;">
+          <span style="font-size:13.5px;font-weight:600;color:var(--text);">Approval Workflow</span>
+
+          <!-- step 1: SM approved -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#061018" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-8"/></svg></div>
+              <div style="width:2px;flex:1;background:var(--green);margin-top:2px;"></div>
+            </div>
+            <div style="flex:1;padding-bottom:6px;">
+              <span style="font-size:12.5px;font-weight:600;color:var(--text);">Section Manager</span>
+              <div style="font-size:11.5px;color:var(--text-dim);margin-top:2px;">Pranee Boonmee · Approved Aug 30</div>
+              <div style="background:var(--surface-alt);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:11.5px;color:var(--text-dim);">Target reduction set: <b style="color:var(--text);">9.0 hrs/week</b><br/>"Approved, good use case."</div>
+            </div>
+          </div>
+
+          <!-- step 2: DM pending (active) -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#061018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M10 6.5v3.5l2.5 1.5"/></svg></div>
+              <div style="width:2px;flex:1;background:var(--border);margin-top:2px;"></div>
+            </div>
+            <div style="flex:1;padding-bottom:6px;">
+              <span style="font-size:12.5px;font-weight:600;color:var(--text);">Department Manager</span>
+              <div style="font-size:11.5px;color:var(--amber);margin-top:2px;font-weight:600;">Warit Suksawat · Awaiting decision</div>
+              <div style="background:var(--surface-alt);border:1px solid rgba(240,176,84,.35);border-radius:8px;padding:10px 12px;margin-top:8px;display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <span style="font-size:11px;color:var(--text-faint);">Confirm target time-reduction</span>
+                  <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;"><span style="font-size:12.5px;color:var(--text);font-weight:600;">9.3</span><span style="font-size:11.5px;color:var(--text-faint);">hrs/week</span></div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                  <button style="flex:1;background:var(--red);border:none;border-radius:6px;padding:8px;font-size:11.5px;font-weight:600;color:#fff;">Reject</button>
+                  <button style="flex:1;background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:6px;padding:8px;font-size:11.5px;font-weight:600;color:#061018;">Approve</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- step 3: DivM locked -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="9" width="11" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+            </div>
+            <div style="flex:1;">
+              <span style="font-size:12.5px;font-weight:600;color:var(--text-faint);">Division Manager</span>
+              <div style="font-size:11.5px;color:var(--text-faint);margin-top:2px;">Awaiting Department Manager</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;gap:10px;align-items:flex-start;">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.6" style="flex-shrink:0;margin-top:1px;"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v4M10 6.8v.2"/></svg>
+          <span style="font-size:11.5px;color:var(--text-faint);line-height:1.5;">Project registration completes only once all three managers approve and confirm the target time-reduction goal.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

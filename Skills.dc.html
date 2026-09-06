@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+:root{
+  --bg:#0a0f1a; --sidebar:#0b1220; --surface:#121a2b; --surface-alt:#182238;
+  --border:#1e2a42; --border-soft:#182238;
+  --text:#eef2f8; --text-dim:#93a1bd; --text-faint:#5c6b8a;
+  --blue:#4f8dff; --teal:#2dd4c4; --amber:#f0b054; --green:#34d399; --red:#f2665a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;}
+a{color:var(--teal);text-decoration:none;}
+a:hover{color:var(--blue);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</helmet>
+
+<div style="width:1440px;height:960px;background:var(--bg);display:flex;overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <div style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;">
+    <div style="padding:24px 20px 20px 20px;display:flex;align-items:center;gap:10px;">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <defs><linearGradient id="lg6" x1="0" y1="0" x2="26" y2="26"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#2dd4c4"/></linearGradient></defs>
+        <path d="M7 19 13 6 19 19" stroke="url(#lg6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="13" cy="6" r="2.4" fill="url(#lg6)"/><circle cx="7" cy="19" r="2.4" fill="url(#lg6)"/><circle cx="19" cy="19" r="2.4" fill="url(#lg6)"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;color:var(--text);letter-spacing:-0.02em;">bewithai</span>
+        <span style="font-size:10.5px;color:var(--text-faint);letter-spacing:.04em;text-transform:uppercase;">AI Consulting Ops</span>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:12px;display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.2"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 2.5 6.5 10 10.5l7.5-4Z"/><path d="M2.5 10.5 10 14.5l7.5-4"/><path d="M2.5 14.5 10 18.5l7.5-4"/></svg>
+        <span>Projects</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V3"/><path d="M4 3.5c1.4-.9 2.8-.9 4.2 0 1.4.9 2.8.9 4.2 0 1.4-.9 2.8-.9 4.2 0v7c-1.4-.9-2.8-.9-4.2 0-1.4.9-2.8.9-4.2 0-1.4-.9-2.8-.9-4.2 0"/></svg>
+        <span>Issues</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8h15"/><path d="M6.5 2.5v3M13.5 2.5v3"/></svg>
+        <span>Bookings</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5 10 4l7.5 3.5L10 11z"/><path d="M5.5 9v3.5c0 1 2 2 4.5 2s4.5-1 4.5-2V9"/></svg>
+        <span>E-Learning</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:linear-gradient(135deg, rgba(79,141,255,.16), rgba(45,212,196,.10));color:var(--text);font-size:13.5px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="5.5"/><path d="M7 12.5 5.8 18l4.2-2.3L14.2 18 13 12.5"/></svg>
+        <span>Skills</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V3M3 17h14"/><rect x="5.5" y="11" width="2.4" height="4"/><rect x="9.3" y="8" width="2.4" height="7"/><rect x="13.1" y="6" width="2.4" height="9"/></svg>
+        <span>Reports</span>
+      </div>
+      <div style="height:1px;background:var(--border-soft);margin:8px 4px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--text-dim);font-size:13.5px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M2.5 10h2M15.5 10h2M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4"/></svg>
+        <span>Settings</span>
+      </div>
+    </div>
+
+    <div style="padding:16px;border-top:1px solid var(--border-soft);display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+      <div style="display:flex;flex-direction:column;">
+        <span style="font-size:12.5px;color:var(--text);font-weight:600;">Traitet</span>
+        <span style="font-size:11px;color:var(--text-faint);">Lead AI Consultant</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+
+    <div style="height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--border);">
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;color:var(--text);">Skill Directory</span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 14px;width:200px;">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="1.6"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M17 17l-4-4" stroke-linecap="round"/></svg>
+          <span style="font-size:12.5px;color:var(--text-faint);">Search people…</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#2dd4c4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="1.5"/><path d="M7 7h1M7 10.5h1M7 14h1M12 7h1M12 10.5h1M12 14h1"/></svg>
+          <span style="font-size:12.5px;color:var(--text);font-weight:600;">All Companies</span>
+          <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="#5c6b8a" stroke-width="2.2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        </div>
+        <button style="background:linear-gradient(135deg,var(--blue),var(--teal));border:none;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;color:#061018;display:flex;align-items:center;gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#061018" stroke-width="2.2" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
+          Add Skill Record
+        </button>
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#061018;">TR</div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:24px 28px;display:flex;flex-direction:column;gap:16px;overflow:hidden;">
+
+      <!-- filters + legend -->
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-dim);">Department: All</div>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-dim);">AI Tool: All</div>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-dim);">Level: All</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 14px;">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div><span style="font-size:10.5px;color:var(--text-faint);">L1 Beginner</span></div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div><span style="font-size:10.5px;color:var(--text-faint);">L2 Intermediate</span></div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div><span style="font-size:10.5px;color:var(--text-faint);">L3 Advanced</span></div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div><span style="font-size:10.5px;color:var(--text-faint);">L4 Expert</span></div>
+        </div>
+      </div>
+
+      <!-- table -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;flex:1;display:flex;flex-direction:column;">
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:12px 20px;border-bottom:1px solid var(--border);">
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Employee</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Company · Role</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Overall</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Claude Cowork</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Claude Code</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">ChatGPT</span>
+          <span style="font-size:11px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.03em;">Assessed</span>
+          <span></span>
+        </div>
+
+        <!-- helper row template repeated inline -->
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#061018;">TR</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Traitet</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">bewithai</span><span style="font-size:11px;color:var(--text-faint);">Lead AI Consultant</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Aug 1</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#061018;">SW</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Saowalak</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">bewithai</span><span style="font-size:11px;color:var(--text-faint);">AI Consultant</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Aug 1</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#061018;">SC</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Somchai</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">bewithai</span><span style="font-size:11px;color:var(--text-faint);">AI Consultant</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Aug 1</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:var(--text-dim);">KP</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Kanya Phongsathorn</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">Acme Mfg · Finance</span><span style="font-size:11px;color:var(--text-faint);">Senior Analyst</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Jul 15</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:var(--text-dim);">AS</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Anucha Sirisak</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">Acme Mfg · Sales Ops</span><span style="font-size:11px;color:var(--text-faint);">Ops Manager</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Jul 10</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;border-bottom:1px solid var(--border-soft);align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:var(--text-dim);">NC</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Nattapong Charoen</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">Siam Textile · Strategy</span><span style="font-size:11px;color:var(--text-faint);">Strategy Lead</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Jun 28</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 100px 130px 130px 130px 110px 60px;padding:13px 20px;align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:var(--text-dim);">SW</div><span style="font-size:12.5px;color:var(--text);font-weight:600;">Sirikan Wattana</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;"><span style="font-size:12px;color:var(--text-dim);">Blue Ocean · Marketing</span><span style="font-size:11px;color:var(--text-faint);">Marketing Exec</span></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--teal);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div><div style="width:8px;height:8px;border-radius:2px;background:var(--border);"></div></div>
+          <span style="font-size:11.5px;color:var(--text-dim);">Jun 20</span>
+          <a href="#" style="font-size:11.5px;font-weight:600;">View</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
